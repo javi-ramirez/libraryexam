@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->integer('id')->autoIncrement();
-            $table->string('name',255)->nullable(false);;
-            $table->string('email',255)->nullable(false);;
-            $table->string('password',255)->nullable(false);;
+            $table->string('name',255)->nullable(false);
+            $table->string('email',255)->nullable(false);
+            $table->string('password',255)->nullable(false);
             $table->timestamps();
         });
     }
