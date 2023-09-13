@@ -26,10 +26,19 @@ Route::get('/', function () {
 
 Route::get('authlogin',[UserController::class,'index']);
 Route::post('btnValidateLogin',[AdminController::class,'validateUser']);
+Route::get('admin/btnLogout',[AdminController::class,'logOut']);
+
 Route::get('admin/dashboard',[AdminController::class,'index']);
+
 Route::get('admin/books',[BookController::class,'index']);
+Route::post('admin/btnAddBook',[BookController::class,'create']);
+
 Route::get('admin/loans',[LoansController::class,'index']);
+
 Route::get('admin/categories',[CategoryController::class,'index']);
+Route::get('admin/getListCategories',[CategoryController::class,'show']);
+
+Route::get('admin/users',[UserController::class,'viewUsers']);
 
 
 /*Route::resource('auth',UserController::class);

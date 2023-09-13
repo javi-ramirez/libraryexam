@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
+use App\Models\LiteraryGenre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\TryCatch;
+use Carbon\Carbon;
 
 class BookController extends Controller
 {
@@ -33,7 +37,7 @@ class BookController extends Controller
                 'books.id',
                 'books.name',
                 'author',
-                'published_date',
+                DB::raw('DATE_FORMAT(published_date, "%M, %Y") as published_date'),
                 'books.created_at',
                 'books.updated_at',
                 DB::raw('GROUP_CONCAT(categories.name) AS categories'),
@@ -45,20 +49,77 @@ class BookController extends Controller
             ->groupBy('books.id', 'books.name', 'author', 'published_date', 'books.created_at', 'books.updated_at')
             ->paginate(5);     
 
-            return view ('admin/books',['dataUser'=>$dataUser,'dataBooks'=>$dataBooks]);	
-        }
-        else
-        {
-            return redirect('/')->with('warning','Session expired.');;
+            $dataCategories = Category::select(
+                'id',
+                'name',
+                'description'
+            )
+            ->get();
+
+            return view ('admin/books',['dataUser'=>$dataUser,'dataBooks'=>$dataBooks,'dataCategories'=>$dataCategories]);	
+        } else{
+            return redirect('/')->with('warning','Session expired.');
 		}
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $existenceName = DB::table('books')
+                ->select('id','name')
+                ->get();
+
+                foreach($existenceName as $names)
+                {
+                    if($names->name == $data->input('txtName'))
+                    {
+                        DB::rollback();
+                        return redirect ('admin/boooks')->with('warning','Duplicate name. The name of the book is already registered.');
+                    }
+                }
+
+                $Books = new Book;
+                $Books->name = $data->input('txtName');
+                $Books->author = $data->input('txtAuthor');
+                $Books->published_date = $data->input('txtPublishedDate');
+                $Books->created_at = Carbon::now();
+                $Books->updated_at = Carbon::now();
+                
+                if($Books->save()){
+
+                    $idBookNew = $Books->id;
+            
+                    $listCategoriesSelected = $data->input('txtCategory');
+                    $listCategoriesSelected = explode(",", $listCategoriesSelected);        
+
+                    foreach ($listCategoriesSelected as $category) {
+                        $LiterayGenre = new LiteraryGenre();
+                        $LiterayGenre->book_id = $idBookNew;
+                        $LiterayGenre->category_id = $category; 
+                        $LiterayGenre->save();
+                    }
+                    
+                    DB::commit(); 
+                    return redirect ('admin/books')->with('message','Successful book registration.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/books')->with('warning','Error when trying to add the book. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/books')->with('warning','Error when trying to add the book. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**

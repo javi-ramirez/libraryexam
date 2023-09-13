@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -14,6 +15,43 @@ class UserController extends Controller
     {
         //
         return view('auth.login');
+    }
+
+    public function viewUsers()
+    {
+        //
+        //
+        if (session()->has('s_identificador') ) 
+        {
+            $consultingSession = DB::table('user')
+            ->select('id')
+            ->where('email','=',session('s_identificador'))
+            ->get();
+
+            $idJson = json_decode(json_encode($consultingSession),true);
+            $idSession = implode($idJson[0]);
+            
+            $dataUser = DB::table('user')
+            ->select('id','name','email')
+            ->where('id', '=', $idSession)
+            ->get();
+
+            $dataUsers = DB::table('user')
+            ->select(
+                'id',
+                'name',
+                'email',
+                'created_at',
+                'updated_at',
+            )
+            ->paginate(5);     
+
+            return view ('admin/users',['dataUser'=>$dataUser,'dataUsers'=>$dataUsers]);	
+        }
+        else
+        {
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**

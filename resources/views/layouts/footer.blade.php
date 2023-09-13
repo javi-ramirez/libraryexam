@@ -17,5 +17,10 @@
         <script src="<?php echo $_ENV['APP_RESOURCES'] ?>js/main.js" ></script>
 
         <script src="<?php echo $_ENV['APP_RESOURCES'] ?>js/app.js" ></script>
+
+        <script src="<?php echo $_ENV['APP_RESOURCES'] ?>js/jquery.flexdatalist.min.js" ></script>
+
+        <script src="<?php echo $_ENV['APP_RESOURCES'] ?>js/validationsForms.js" ></script>
+        
     </body>
 </html>

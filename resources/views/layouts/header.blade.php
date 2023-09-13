@@ -33,5 +33,8 @@
         <link rel="stylesheet" href="<?php echo $_ENV['APP_RESOURCES'] ?>css/style.css">
 
         <link rel="stylesheet" href="<?php echo $_ENV['APP_RESOURCES'] ?>css/app.css">
+
+        <link rel="stylesheet" href="<?php echo $_ENV['APP_RESOURCES'] ?>css/jquery.flexdatalist.min.css">
+        <link rel="stylesheet" href="<?php echo $_ENV['APP_RESOURCES'] ?>css/jquery.flexdatalist.css">
     </head>
     <body>

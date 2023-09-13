@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -13,6 +14,36 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        if (session()->has('s_identificador') ) 
+        {
+            $consultingSession = DB::table('user')
+            ->select('id')
+            ->where('email','=',session('s_identificador'))
+            ->get();
+
+            $idJson = json_decode(json_encode($consultingSession),true);
+            $idSession = implode($idJson[0]);
+            
+            $dataUser = DB::table('user')
+            ->select('id','name','email')
+            ->where('id', '=', $idSession)
+            ->get();
+
+            $dataCategories = Category::select(
+                'id',
+                'name',
+                'description',
+                'created_at',
+                'updated_at',
+            )
+            ->paginate(5);     
+
+            return view ('admin/categories',['dataUser'=>$dataUser,'dataCategories'=>$dataCategories]);	
+        }
+        else
+        {
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**
@@ -37,6 +68,14 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        $dataCategories = Category::select(
+            'id',
+            'name',
+            'description'
+        )
+        ->get();
+
+        return response($dataCategories);
     }
 
     /**

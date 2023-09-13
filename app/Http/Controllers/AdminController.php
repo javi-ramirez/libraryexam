@@ -49,10 +49,10 @@ class AdminController extends Controller
 		}
     }
 
-    public function validateUser (Request $datos)
+    public function validateUser (Request $data)
     {
-        $emailUser = $datos->input ('txtEmail');
-        $passwrodUser = md5($datos->input ('txtPassword'));
+        $emailUser = $data->input ('txtEmail');
+        $passwrodUser = md5($data->input ('txtPassword'));
 
         $consultingDataUser = DB::table('User')
         ->select('email', 'password')
@@ -69,5 +69,11 @@ class AdminController extends Controller
         {
             return redirect('/')->with('warning','Incorrect email or password.');
         }
+    }
+
+    public function logOut (){
+        //Matamos todos los datos de la sesion
+        Session()->flush();
+        return redirect('/')->with('message','Closed session.');
     }
 }

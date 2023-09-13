@@ -17,19 +17,19 @@
                 </li>
 
                 <li>
-                    <a href="books" class="nav-btn-submenu"><i class="fas fa-book fa-fw"></i> &nbsp; Books</a>
+                    <a href="books"><i class="fas fa-book fa-fw"></i> &nbsp; Books</a>
                 </li>
 
                 <li>
-                    <a href="#" class="nav-btn-submenu"><i class="fas fa-book-reader fa-fw"></i> &nbsp; Loan History</a>
+                    <a href="loans"><i class="fas fa-book-reader fa-fw"></i> &nbsp; Loan History</a>
                 </li>
 
                 <li>
-                    <a href="#" class="nav-btn-submenu"><i class="fas fa-bookmark fa-fw"></i> &nbsp; Categories</a>
+                    <a href="categories"><i class="fas fa-bookmark fa-fw"></i> &nbsp; Categories</a>
                 </li>
 
                 <li>
-                    <a href="#" class="nav-btn-submenu"><i class="fas fa-user fa-fw"></i> &nbsp; Users</a>
+                    <a href="users"><i class="fas fa-user fa-fw"></i> &nbsp; Users</a>
                 </li>
             </ul>
         </nav>

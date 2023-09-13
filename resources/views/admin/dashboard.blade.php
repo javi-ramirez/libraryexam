@@ -7,17 +7,8 @@
 
     <!-- Page content -->
     <section class="full-box page-content">
-        <nav class="full-box navbar-info">
-            <a href="#" class="float-left show-nav-lateral">
-                <i class="fas fa-exchange-alt"></i>
-            </a>
-            <a href="user-update.html">
-                <i class="fas fa-user-cog"></i>
-            </a>
-            <a href="#" class="btn-exit-system">
-                <i class="fas fa-power-off"></i>
-            </a>
-        </nav>
+        
+        @include ('layouts.nav')
 
         <!-- Page header -->
         <div class="full-box page-header">
@@ -40,7 +31,7 @@
                 </div>
             </a>
 
-            <a href="reservation-list.html" class="tile">
+            <a href="loans" class="tile">
                 <div class="tile-tittle">Loan History</div>
                 <div class="tile-icon">
                     <i class="fas fa-book-reader fa-fw"></i>
@@ -48,7 +39,7 @@
                 </div>
             </a>
             
-            <a href="company.html" class="tile">
+            <a href="categories" class="tile">
                 <div class="tile-tittle">Categories</div>
                 <div class="tile-icon">
                     <i class="fas fa-bookmark fa-fw"></i>
@@ -56,7 +47,7 @@
                 </div>
             </a>
             
-            <a href="client-new.html" class="tile">
+            <a href="users" class="tile">
                 <div class="tile-tittle">Users</div>
                 <div class="tile-icon">
                     <i class="fas fa-user fa-fw"></i>

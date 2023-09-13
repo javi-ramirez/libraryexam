@@ -6,17 +6,9 @@
     @include ('layouts.menu')
 
     <section class="full-box page-content">
-        <nav class="full-box navbar-info">
-            <a href="#" class="float-left show-nav-lateral">
-                <i class="fas fa-exchange-alt"></i>
-            </a>
-            <a href="user-update.html">
-                <i class="fas fa-user-cog"></i>
-            </a>
-            <a href="#" class="btn-exit-system">
-                <i class="fas fa-power-off"></i>
-            </a>
-        </nav>
+        
+        @include ('layouts.nav')
+        
         <!-- Page header -->
         <div class="full-box page-header">
             <h3 class="text-left">
@@ -34,11 +26,13 @@
             </ul>
         </div>
         
+        @include ('components.flash_alerts')
+        
         <!--CONTENT-->
         <div class="container-fluid">
             <section id="listBook">
                 <div class="table-responsive">
-                    <table class="table table-dark table-sm">
+                    <table class="table table-dark table-sm custom-table">
                         <thead>
                             <tr class="text-center roboto-medium">
                                 <th>ID</th>
@@ -89,7 +83,66 @@
             </section>
            
             <section id="addBook">
-                agregar
+                <!--CONTENT-->
+                <div class="container-fluid">
+                    <form method="post" class="form-neon" autocomplete="off" id="formAddBook" enctype="multipart/form-data">
+				    {{csrf_field()}}
+                        <fieldset>
+                            <legend><i class="far fa-plus-square"></i> &nbsp; Book information</legend>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtName" class="bmd-label-floating">Name</label>
+                                            <input type="text" class="form-control" name="txtName" id="txtName" maxlength="255">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtPublishedDate" class="bmd-label-floating">Published date</label>
+                                            <input type="date" class="form-control" name="txtPublishedDate" id="txtPublishedDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtAuthor" class="bmd-label-floating">Author</label>
+                                            <input type="text" class="form-control" name="txtAuthor" id="txtAuthor" maxlength="255">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtCategory" class="bmd-label-floating">Category(ies)</label>
+                                            <!--<select multiple class="form-control" name="txtCategory" id="txtCategory">
+                                                <option value="0" selected="" disabled="">Select a category</option>
+                                                @foreach ($dataCategories as $category)
+                                                    <option value="{{$category->id}}" title="{{$category->desscription}}">{{$category->name}}</option>
+                                                @endforeach
+                                            </select>-->
+                                            
+                                           <input class="form-control" type='text'
+                                            data-search-in='name'
+                                            data-visible-properties='["name","description"]'
+                                            data-selection-required='true'
+                                            data-value-property='id'
+                                            data-min-length='0'
+                                            data-toggle-selected='true'
+                                            id='txtCategory'
+                                            multiple='multiple'
+                                            name='txtCategory'>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br><br><br>
+                        <p class="text-center" style="margin-top: 40px;">
+                            <button type="reset" class="btn btn-raised btn-secondary btn-sm" onclick="cleanFormAddBook()"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
+                            &nbsp; &nbsp;
+                            <button type="submit" class="btn btn-raised btn-info btn-sm" formaction="btnAddBook" id="btnBookAdd"><i class="far fa-save"></i> &nbsp; SAVE</button>
+                        </p>
+                    </form>
+                </div>
             </section>
             
         </div>
