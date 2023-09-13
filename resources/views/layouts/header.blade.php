@@ -31,5 +31,7 @@
         
         <!-- General Styles -->
         <link rel="stylesheet" href="<?php echo $_ENV['APP_RESOURCES'] ?>css/style.css">
+
+        <link rel="stylesheet" href="<?php echo $_ENV['APP_RESOURCES'] ?>css/app.css">
     </head>
     <body>

@@ -15,5 +15,7 @@
         <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 
         <script src="<?php echo $_ENV['APP_RESOURCES'] ?>js/main.js" ></script>
+
+        <script src="<?php echo $_ENV['APP_RESOURCES'] ?>js/app.js" ></script>
     </body>
 </html>

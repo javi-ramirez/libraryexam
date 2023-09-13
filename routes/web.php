@@ -27,6 +27,9 @@ Route::get('/', function () {
 Route::get('authlogin',[UserController::class,'index']);
 Route::post('btnValidateLogin',[AdminController::class,'validateUser']);
 Route::get('admin/dashboard',[AdminController::class,'index']);
+Route::get('admin/books',[BookController::class,'index']);
+Route::get('admin/loans',[LoansController::class,'index']);
+Route::get('admin/categories',[CategoryController::class,'index']);
 
 
 /*Route::resource('auth',UserController::class);

@@ -14,7 +14,39 @@ class AdminController extends Controller
     public function index()
     {
         //
-        return view('admin/dashboard');
+        if (session()->has('s_identificador') ) 
+        {
+            $consultingSession = DB::table('user')
+            ->select('id')
+            ->where('email','=',session('s_identificador'))
+            ->get();
+
+            $idJson = json_decode(json_encode($consultingSession),true);
+            $idSession = implode($idJson[0]);
+            
+            $dataUser = DB::table('user')
+            ->select('id','name','email')
+            ->where('id', '=', $idSession)
+            ->get();
+
+            $recordsBooks = DB::table('books')
+            ->count();
+
+            $recordsLoans = DB::table('loans')
+            ->count();
+
+            $recordsCategories = DB::table('categories')
+            ->count();
+
+            $recordsUsers = DB::table('user')
+            ->count();
+
+            return view ('admin/dashboard',['dataUser'=>$dataUser,'recordsBooks'=>$recordsBooks,'recordsLoans'=>$recordsLoans, 'recordsCategories'=>$recordsCategories, 'recordsUsers'=>$recordsUsers]);	
+        }
+        else
+        {
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     public function validateUser (Request $datos)
@@ -31,7 +63,7 @@ class AdminController extends Controller
         if ($consultingDataUser!="[]")
         {
             session(['s_identificador'=>$emailUser]);
-            return redirect('admin/dashboard')->with('message','Successful access.');
+			return redirect ('admin/dashboard')->with('message','Successful access.');
         }
         else
         {
