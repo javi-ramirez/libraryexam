@@ -26,19 +26,27 @@ class AdminController extends Controller
             
             $dataUser = DB::table('user')
             ->select('id','name','email')
+            ->where('status','!=',0)
             ->where('id', '=', $idSession)
             ->get();
 
             $recordsBooks = DB::table('books')
+            ->where('status','!=',0)
             ->count();
 
-            $recordsLoans = DB::table('loans')
+            $recordsLoans = DB::table('loans')     
+            ->join('books', 'books.id', '=', 'loans.book_id')
+            ->join('user', 'user.id', '=', 'loans.user_id')
+            ->where('books.status','!=',0)
+            ->where('user.status','!=',0)
             ->count();
 
             $recordsCategories = DB::table('categories')
+            ->where('status','!=',0)
             ->count();
 
             $recordsUsers = DB::table('user')
+            ->where('status','!=',0)
             ->count();
 
             return view ('admin/dashboard',['dataUser'=>$dataUser,'recordsBooks'=>$recordsBooks,'recordsLoans'=>$recordsLoans, 'recordsCategories'=>$recordsCategories, 'recordsUsers'=>$recordsUsers]);	
@@ -68,12 +76,46 @@ class AdminController extends Controller
         }
         else
         {
-            return redirect('/')->with('warning','Incorrect email or password.');
+            $incorrectPass = DB::table('User')
+            ->select('email', 'password')
+            ->where('email', '=', $emailUser)
+            ->where('password', '!=', $passwrodUser)
+            ->where('status','!=',0)
+            ->get();
+
+            if ($incorrectPass!="[]")
+            {
+                DB::rollback();
+                return redirect('/')->with('warning','Incorrect password. Please try again.');
+            }
+
+            $removed = DB::table('User')
+            ->select('email', 'password')
+            ->where('email', '=', $emailUser)
+            ->where('password', '=', $passwrodUser)
+            ->where('status','=',0)
+            ->get();
+            
+            if ($removed!="[]"){
+                return redirect('/')->with('warning','The account has been removed.');
+            }
+
+            $invalidEmail = DB::table('User')
+            ->select('email', 'password')
+            ->where('email', '!=', $emailUser)
+            ->where('status','!=',0)
+            ->get();
+            
+            if ($invalidEmail!="[]"){
+                return redirect('/')->with('warning','The email is invalid.');
+            }
+
+            return redirect('/')->with('warning','The email is invalid.');
         }
     }
 
     public function logOut (){
-        //Matamos todos los datos de la sesion
+        
         Session()->flush();
         return redirect('/')->with('message','Closed session.');
     }

@@ -63,9 +63,27 @@
     cursor: pointer!important; 
     border-radius: 10px!important;
 }
-  
+
 .btn-info:hover {
     background-color: #2980b9!important;
+}
+  
+/*Style Button Warning*/
+.btn-warning {
+    background-color: #b70e0e!important; 
+    border: none!important;
+    color: #ffffff!important; 
+    padding: 10px 20px!important; 
+    font-size: 14px!important; 
+    font-weight: bold!important; 
+    text-decoration: none!important; 
+    transition: background-color 0.3s ease!important; 
+    cursor: pointer!important; 
+    border-radius: 10px!important;
+}
+
+.btn-warning:hover {
+    background-color: #ff0000!important;
 }
   
 /*Style Table*/

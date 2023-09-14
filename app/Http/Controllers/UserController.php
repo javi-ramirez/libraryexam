@@ -70,6 +70,7 @@ class UserController extends Controller
 
                 $existenceEmail = DB::table('user')
                 ->select('id','email')
+                ->where('status','!=',0)
                 ->get();
 
                 foreach($existenceEmail as $email)
@@ -170,6 +171,7 @@ class UserController extends Controller
                 $existenceEmail = DB::table('user')
                 ->select('id','email','password')
                 ->where('id','!=',$idSession)
+                ->where('status','!=',0)
                 ->get();
 
                 $currentPassword = DB::table('user')
@@ -230,8 +232,52 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function delete($userId)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $existenceLoan = DB::table('user')
+                ->select('user.id',
+                        DB::raw('IF(EXISTS(SELECT 1 FROM loans WHERE user_id = user.id AND loans.status=1), "1", "0") AS used'),
+                )
+                ->where('user.id','=',$userId)
+                ->where('user.status','!=',0)
+                ->get();
+
+                foreach($existenceLoan as $loan)
+                {
+                    if($loan->used == 1)
+                    {
+                        DB::rollback();
+                        return redirect ('admin/updateusers')->with('warning','This user has outstanding loans. Please return the books to delete the account.');
+                    }
+                }
+                
+                if(DB::table('user')
+                ->where('id', '=', $userId)
+                ->update([
+                    'status' => 0,
+                    'updated_at' => Carbon::now()
+                ])){
+                    
+                    DB::commit();
+                    
+                    Session()->flush();
+                    return redirect('/')->with('message','Closed session. Successful user delete.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/updateusers')->with('warning','Error when trying to delete the user account. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/updateusers')->with('warning','Error when trying to delete the user account. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 }

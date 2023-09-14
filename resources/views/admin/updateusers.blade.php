@@ -82,6 +82,8 @@
                             <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; OLD VALUES</button>
                             &nbsp; &nbsp;
                             <button type="submit" class="btn btn-raised btn-info btn-sm" formaction="btnEditUser" id="btnUserEdit"><i class="far fa-save"></i> &nbsp; SAVE</button>
+                            &nbsp; &nbsp;
+                            <button type="reset" class="btn btn-raised btn-warning btn-sm deleteUser-button" data-id="{{$dataUser[0]->id}}"><i class="fas fa-trash"></i> &nbsp; DELETE ACCOUNT</button>
                         </p>
                     </form>
                 </div>

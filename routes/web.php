@@ -49,6 +49,7 @@ Route::get('admin/users',[UserController::class,'viewUsers']);
 Route::post('admin/btnAddUser',[UserController::class,'create']);
 Route::get('admin/updateusers',[UserController::class,'show']);
 Route::post('admin/btnEditUser',[UserController::class,'edit']);
+Route::get('admin/deleteuser/{id}',[UserController::class,'delete'])->name('delete.user');
 
 
 /*Route::resource('auth',UserController::class);

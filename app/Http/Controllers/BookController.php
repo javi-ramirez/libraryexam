@@ -76,6 +76,7 @@ class BookController extends Controller
 
                 $existenceName = DB::table('books')
                 ->select('id','name')
+                ->where('status','!=',0)
                 ->get();
 
                 foreach($existenceName as $names)
@@ -207,8 +208,12 @@ class BookController extends Controller
             {
                 DB::beginTransaction();
 
+                $idBook = intval($data->input('idBookEdit'));
+
                 $existenceName = DB::table('books')
-                ->select('id','name')
+                ->select('id','name')       
+                ->where('id','!=',$idBook)
+                ->where('status','!=',0)
                 ->get();
 
                 foreach($existenceName as $names)
@@ -220,7 +225,6 @@ class BookController extends Controller
                     }
                 }
 
-                $idBook = intval($data->input('idBookEdit'));
                 $Books = Book::find($idBook);
 
                 $Books->name = $data->input('txtNameEdit');
@@ -278,16 +282,13 @@ class BookController extends Controller
 
                 $Books = Book::find($idBook);
 
-                $isLoan = DB::table('books')
-                ->select('id','name')
-                ->get();
-
                 $isLoan = Book::select(
                     DB::raw('IF(EXISTS(SELECT 1 FROM loans WHERE book_id = books.id AND return_date IS NULL AND loans.status=1), "1", "0") AS status'),
                 )
                 ->join('literary_genres', 'books.id', '=', 'literary_genres.book_id')
                 ->join('categories', 'literary_genres.category_id', '=', 'categories.id')
                 ->where('books.status','!=',0)
+                ->where('books.id','=',$idBook)
                 ->groupBy('books.id', 'books.name', 'author', 'published_date', 'books.created_at', 'books.updated_at')
                 ->get();    
 

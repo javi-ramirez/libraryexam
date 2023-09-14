@@ -109,7 +109,7 @@ window.onload = function () {
             
             Swal.fire({
                 title: 'Are you sure to delete the book?',
-                text: 'You are about to delete the book',
+                text: 'You are about to delete the book. The books borrowing history will no longer be visible.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -523,6 +523,28 @@ window.onload = function () {
                 $("#txtNewPasswordUserEdit").removeClass("is-invalid");
             }
         });
+
+        /*  Delete user buttom */
+        $('.deleteUser-button').on('click', function (e) {
+            e.preventDefault(); 
+
+            // Obtiene el valor del atributo data-id del botón actual
+            const userId = $(this).data('id');
+            
+            Swal.fire({
+                title: 'Are you sure to delete the account?',
+                text: 'You are about to delete your user',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    window.location='deleteuser/' + userId;
+                }
+            });
+        });    
     }
 };
-

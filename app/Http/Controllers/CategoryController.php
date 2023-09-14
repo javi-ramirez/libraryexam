@@ -62,6 +62,7 @@ class CategoryController extends Controller
 
                 $existenceName = DB::table('categories')
                 ->select('id','name')
+                ->where('status','!=',0)
                 ->get();
 
                 foreach($existenceName as $names)
@@ -179,6 +180,7 @@ class CategoryController extends Controller
                 $existenceName = DB::table('categories')
                 ->select('id','name')
                 ->where('id','!=',$idCategory)
+                ->where('status','!=',0)
                 ->get();
 
                 foreach($existenceName as $names)
@@ -230,6 +232,23 @@ class CategoryController extends Controller
             try
             {
                 DB::beginTransaction();
+
+                $existenceCategorySelected = DB::table('categories')
+                ->select('categories.id',
+                        DB::raw('IF(EXISTS(SELECT 1 FROM literary_genres WHERE category_id = categories.id), "1", "0") AS used'),
+                )
+                ->where('categories.id','=',$idCategory)
+                ->where('categories.status','!=',0)
+                ->get();
+
+                foreach($existenceCategorySelected as $names)
+                {
+                    if($names->used == 1)
+                    {
+                        DB::rollback();
+                        return redirect ('admin/categories')->with('warning','The category is being used by one or more books, please update them to remove the category.');
+                    }
+                }
 
                 $Categories = Category::find($idCategory);
 
