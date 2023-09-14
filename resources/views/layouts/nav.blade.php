@@ -2,7 +2,7 @@
     <a href="#" class="float-left show-nav-lateral">
         <i class="fas fa-exchange-alt"></i>
     </a>
-    <a href="#">
+    <a href="updateusers">
         <i class="fas fa-user-cog"></i>
     </a>
     <a href="btnLogout" class="btn-exit-system">

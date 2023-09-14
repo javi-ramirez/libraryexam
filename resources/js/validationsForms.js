@@ -432,6 +432,97 @@ window.onload = function () {
                 $("#txtDescriptionCategoryEdit").removeClass("is-invalid");
             }
         });
+    }else if ((window.location.href).substring(0, 53) === 'http://localhost/libraryexam/public/admin/updateusers') {
+        // Form Edit User
+        const formEditUser = document.getElementById("formEditUser");
+        const name = document.getElementById("txtNameUserEdit");
+        const email = document.getElementById("txtEmailUserEdit");
+        const currentPass = document.getElementById("txtPasswordUserEdit");
+        const newPass = document.getElementById("txtNewPasswordUserEdit");
+
+        // Event click Edit User
+        formEditUser.addEventListener("submit", function(event) {
+            if (
+                name.value.trim() === "" || 
+                email.value.trim() === "" || 
+                currentPass.value.trim() === "" || 
+                newPass.value.trim() === "" 
+            ) {
+                event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
+
+                if (!name.value) {
+                    $("#invalid-nameUserEdit").css("display", "block");
+                    $("#txtNameUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameUserEdit").css("display", "none");
+                    $("#txtNameUserEdit").removeClass("is-invalid");
+                }
+        
+                if (!email.value) {
+                    $("#invalid-emailUserEdit").css("display", "block");
+                    $("#txtEmailUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-emailUserEdit").css("display", "none");
+                    $("#txtEmailUserEdit").removeClass("is-invalid");
+                }
+
+                if (!currentPass.value) {
+                    $("#invalid-passwordUserEdit").css("display", "block");
+                    $("#txtPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUserEdit").css("display", "none");
+                    $("#txtPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!newPass.value) {
+                    $("#invalid-newpasswordUserEdit").css("display", "block");
+                    $("#txtNewPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-newpasswordUserEdit").css("display", "none");
+                    $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+            }
+        });
+
+        name.addEventListener("change", function(event) {
+            if (!name.value) {
+                $("#invalid-nameUserEdit").css("display", "block");
+                $("#txtNameUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-nameUserEdit").css("display", "none");
+                $("#txtNameUserEdit").removeClass("is-invalid");
+            }
+        });
+
+        email.addEventListener("change", function(event) {
+            if (!email.value) {
+                $("#invalid-emailUserEdit").css("display", "block");
+                $("#txtEmailUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-emailUserEdit").css("display", "none");
+                $("#txtEmailUserEdit").removeClass("is-invalid");
+            }
+        });
+
+        currentPass.addEventListener("change", function(event) {
+            if (!currentPass.value) {
+                $("#invalid-passwordUserEdit").css("display", "block");
+                $("#txtPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUserEdit").css("display", "none");
+                $("#txtPasswordUserEdit").removeClass("is-invalid");
+            }
+        });
+
+        newPass.addEventListener("change", function(event) {
+            if (!newPass.value) {
+                $("#invalid-newpasswordUserEdit").css("display", "block");
+                $("#txtNewPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-newpasswordUserEdit").css("display", "none");
+                $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+            }
+        });
     }
 };
 

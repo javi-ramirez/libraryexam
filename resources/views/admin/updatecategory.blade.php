@@ -62,7 +62,7 @@
                         </fieldset>
                         <br><br><br>
                         <p class="text-center" style="margin-top: 40px;">
-                            <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
+                            <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; OLD VALUES</button>
                             &nbsp; &nbsp;
                             <button type="submit" class="btn btn-raised btn-info btn-sm"  formaction="btnCategoryEdit" id="btnCategoryEdit"><i class="far fa-save"></i> &nbsp; SAVE</button>
                         </p>

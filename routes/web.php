@@ -47,6 +47,8 @@ Route::get('admin/deletecategory/{id}',[CategoryController::class,'delete'])->na
 
 Route::get('admin/users',[UserController::class,'viewUsers']);
 Route::post('admin/btnAddUser',[UserController::class,'create']);
+Route::get('admin/updateusers',[UserController::class,'show']);
+Route::post('admin/btnEditUser',[UserController::class,'edit']);
 
 
 /*Route::resource('auth',UserController::class);

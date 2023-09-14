@@ -115,17 +115,108 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $consultingSession = DB::table('user')
+                ->select('id')
+                ->where('email','=',session('s_identificador'))
+                ->get();
+
+                $idJson = json_decode(json_encode($consultingSession),true);
+                $idSession = implode($idJson[0]);
+                
+                $dataUser = DB::table('user')
+                ->select('id','name','email','password')
+                ->where('id', '=', $idSession)
+                ->get();
+
+                
+                return view ('admin/updateusers',['dataUser'=>$dataUser]);	
+            }catch (\Exception $e) {
+                return redirect('admin/users')->with('warning','Error loading user information. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');
+		}
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $consultingSession = DB::table('user')
+                ->select('id')
+                ->where('email','=',session('s_identificador'))
+                ->get();
+
+                $idJson = json_decode(json_encode($consultingSession),true);
+                $idSession = implode($idJson[0]);
+
+                $existenceEmail = DB::table('user')
+                ->select('id','email','password')
+                ->where('id','!=',$idSession)
+                ->get();
+
+                $currentPassword = DB::table('user')
+                ->select('id','password')
+                ->where('id','=',$idSession)
+                ->get();
+
+                foreach($existenceEmail as $email)
+                {
+                    if($email->email == $data->input('txtEmailUserEdit'))
+                    {
+                        DB::rollback();
+                        return redirect ('admin/updateusers')->with('warning','Duplicate email. The email of the user is already registered.');
+                    }
+                }
+
+                foreach($currentPassword as $password)
+                {
+                    if($password->password != md5($data->input('txtPasswordUserEdit')))
+                    {
+                        DB::rollback();
+                        return redirect ('admin/updateusers')->with('warning','Incorrect current password.');
+                    }
+                }
+
+                if(DB::table('user')
+                    ->where('id', '=', $idSession)
+                    ->update([
+                        'name' => $data->input('txtNameUserEdit'),
+                        'email' => $data->input('txtEmailUserEdit'),
+                        'password' => md5($data->input('txtNewPasswordUserEdit')),
+                        'updated_at' => Carbon::now(),
+                    ])
+                ){
+
+                    DB::commit(); 
+                    return redirect ('admin/updateusers')->with('message','Successful user update.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/updateusers')->with('warning','Error when trying to update the user. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/updateusers')->with('warning','Error when trying to update the user. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**
