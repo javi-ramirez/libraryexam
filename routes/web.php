@@ -43,6 +43,7 @@ Route::get('admin/getListCategories',[CategoryController::class,'list']);
 Route::post('admin/btnAddCategory',[CategoryController::class,'create']);
 Route::post('admin/updatecategory',[CategoryController::class,'show']);
 Route::post('admin/btnCategoryEdit',[CategoryController::class,'edit']);
+Route::get('admin/deletecategory/{id}',[CategoryController::class,'delete'])->name('delete.category');
 
 Route::get('admin/users',[UserController::class,'viewUsers']);
 Route::post('admin/btnAddUser',[UserController::class,'create']);

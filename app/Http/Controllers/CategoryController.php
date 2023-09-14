@@ -222,8 +222,33 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function delete($idCategory)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $Categories = Category::find($idCategory);
+
+                $Categories->status = 0;
+                $Categories->updated_at = Carbon::now();
+                
+                if($Categories->save()){
+                    
+                    DB::commit(); 
+                    return redirect ('admin/categories')->with('message','Successful category delete.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/categories')->with('warning','Error when trying to delete the category. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/categories')->with('warning','Error when trying to delete the category. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 }

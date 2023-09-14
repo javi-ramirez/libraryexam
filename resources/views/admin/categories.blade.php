@@ -57,11 +57,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                <button type="submit" class="btn btn-warning deleteCategory-button" id="btnCategoryDelete{{$category->id}}" data-id="{{$category->id}}"><i class="far fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                             @endforeach

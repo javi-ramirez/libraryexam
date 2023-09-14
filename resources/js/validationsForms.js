@@ -15,7 +15,6 @@ window.onload = function () {
         const published_date = document.getElementById("txtPublishedDate");
         const author = document.getElementById("txtAuthor");
         const category = document.getElementById("txtCategory");
-        const saveButton = document.getElementById("btnBookAdd");
 
         // Event click Add Book
         formAddBook.addEventListener("submit", function(event) {
@@ -177,6 +176,28 @@ window.onload = function () {
             }
         });
 
+        /*  Delete category buttom */
+        $('.deleteCategory-button').on('click', function (e) {
+            e.preventDefault(); 
+
+            // Obtiene el valor del atributo data-id del botón actual
+            const categoryId = $(this).data('id');
+            
+            Swal.fire({
+                title: 'Are you sure to delete the category?',
+                text: 'You are about to delete the category',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    window.location='deletecategory/' + categoryId;
+                }
+            });
+        });    
     }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/loans') {
         showListLoan();
     }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/users') {
