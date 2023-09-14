@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\LiteraryGenre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\TryCatch;
 use Carbon\Carbon;
 
 class BookController extends Controller
@@ -83,7 +82,7 @@ class BookController extends Controller
                     if($names->name == $data->input('txtName'))
                     {
                         DB::rollback();
-                        return redirect ('admin/boooks')->with('warning','Duplicate name. The name of the book is already registered.');
+                        return redirect ('admin/books')->with('warning','Duplicate name. The name of the book is already registered.');
                     }
                 }
 
@@ -133,17 +132,126 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $consultingSession = DB::table('user')
+                ->select('id')
+                ->where('email','=',session('s_identificador'))
+                ->get();
+
+                $idJson = json_decode(json_encode($consultingSession),true);
+                $idSession = implode($idJson[0]);
+                
+                $dataUser = DB::table('user')
+                ->select('id','name','email')
+                ->where('id', '=', $idSession)
+                ->get();
+
+                $idBook = $data->input('idBookShow');
+                
+                $dataBook = Book::select(
+                    'books.id',
+                    'books.name',
+                    'books.author',
+                    'books.published_date',
+                    'books.created_at',
+                    'books.updated_at'
+                )
+                ->where('books.id', '=', $idBook)
+                ->get();
+
+
+                $dataCategories = Category::select(
+                    'categories.id'
+                )
+                ->join('literary_genres', 'literary_genres.category_id', '=', 'categories.id')
+                ->join('books', 'books.id', '=', 'literary_genres.book_id')
+                ->where('books.id', '=', $idBook)
+                ->get();
+
+                /*$arrayData = json_decode($dataCategories, true);
+
+                $idValues = array_map(function($item) {
+                    return $item['id'];
+                }, $arrayData);
+
+                $listCategory = implode(',', $idValues);*/
+                
+                return view ('admin/updatebook',['dataUser'=>$dataUser,'dataBook'=>$dataBook,'dataCategories'=>$dataCategories]);	
+            }catch (\Exception $e) {
+                return redirect('admin/books')->with('warning','Error loading book information. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');
+		}
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
+    public function edit(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $existenceName = DB::table('books')
+                ->select('id','name')
+                ->get();
+
+                foreach($existenceName as $names)
+                {
+                    if($names->name == $data->input('txtName'))
+                    {
+                        DB::rollback();
+                        return redirect ('admin/books')->with('warning','Duplicate name. The name of the book is already registered.');
+                    }
+                }
+
+                $idBook = intval($data->input('idBookEdit'));
+                $Books = Book::find($idBook);
+
+                $Books->name = $data->input('txtNameEdit');
+                $Books->author = $data->input('txtAuthorEdit');
+                $Books->published_date = $data->input('txtPublishedDateEdit');
+                $Books->updated_at = Carbon::now();
+                
+                if($Books->save()){
+
+                    DB::delete('DELETE FROM literary_genres WHERE literary_genres.book_id =?',[$idBook]);
+            
+                    $listCategoriesSelected = $data->input('txtCategoryEdit');
+                    $listCategoriesSelected = explode(",", $listCategoriesSelected);        
+
+                    foreach ($listCategoriesSelected as $category) {
+                        $LiterayGenre = new LiteraryGenre();
+                        $LiterayGenre->book_id = $idBook;
+                        $LiterayGenre->category_id = $category; 
+                        $LiterayGenre->save();
+                    }
+                    
+                    DB::commit(); 
+                    return redirect ('admin/books')->with('message','Successful book update.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/books')->with('warning','Error when trying to update the book. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/books')->with('warning','Error when trying to update the book. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**

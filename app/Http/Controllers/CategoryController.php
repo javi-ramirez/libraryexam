@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -49,9 +50,49 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $existenceName = DB::table('categories')
+                ->select('id','name')
+                ->get();
+
+                foreach($existenceName as $names)
+                {
+                    if($names->name == $data->input('txtNameCategory'))
+                    {
+                        DB::rollback();
+                        return redirect ('admin/categories')->with('warning','Duplicate name. The name of the book is already registered.');
+                    }
+                }
+
+                $Category = new Category();
+                $Category->name = $data->input('txtNameCategory');
+                $Category->description = $data->input('txtDescriptionCategory');
+                $Category->created_at = Carbon::now();
+                $Category->updated_at = Carbon::now();
+                
+                if($Category->save()){
+
+                    
+                    DB::commit(); 
+                    return redirect ('admin/categories')->with('message','Successful category registration.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/categories')->with('warning','Error when trying to add the category. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/categories')->with('warning','Error when trying to add the category. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**

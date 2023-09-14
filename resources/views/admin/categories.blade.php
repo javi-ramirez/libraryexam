@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <ul class="full-box list-unstyled page-nav-tabs">
                 <li>
-                    <a onclick="hideListCategory()"><i class="fas fa-plus fa-fw"></i> &nbsp; ADD CATEGORY</a>
+                    <a onclick="showAddCategory()"><i class="fas fa-plus fa-fw"></i> &nbsp; ADD CATEGORY</a>
                 </li>
                 <li>
-                    <a onclick="hideAddCategory()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
+                    <a onclick="showListCategory()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
                 </li>
             </ul>
         </div>
@@ -77,39 +77,39 @@
             <section id="addCategory">
                 <!--CONTENT-->
                 <div class="container-fluid">
-                    <form action="" class="form-neon" autocomplete="off">
+                    <form method="post" class="form-neon needs-validation" autocomplete="off" id="formAddCategory" enctype="multipart/form-data">
+				    {{csrf_field()}}
                         <fieldset>
                             <legend><i class="far fa-plus-square"></i> &nbsp; Category information</legend>
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txtName" class="bmd-label-floating">Name</label>
-                                            <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="txtName" id="txtName" maxlength="255">
+                                            <label for="txtNameCategory" class="bmd-label-floating">Name</label>
+                                            <input type="text" class="form-control" name="txtNameCategory" id="txtNameCategory" maxlength="255">
+                                            <div class="invalid-feedback" id="invalid-nameCategory">
+                                                Please choose a Name.
+                                            </div>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txtAuthor" class="bmd-label-floating">Description</label>
-                                            <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="txtAuthor" id="txtAuthor" maxlength="255">
+                                            <label for="txtDescriptionCategory" class="bmd-label-floating">Description</label>
+                                            <input type="text" class="form-control" name="txtDescriptionCategory" id="txtDescriptionCategory" maxlength="255">
+                                            <div class="invalid-feedback" id="invalid-descriptionCategory">
+                                                Please choose a Description.
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <label for="txtPublishedDate" class="bmd-label-floating">Published date</label>
-                                            <input type="date" class="form-control" name="txtPublishedDate" id="txtPublishedDate">
-                                        </div>
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </fieldset>
                         <br><br><br>
                         <p class="text-center" style="margin-top: 40px;">
-                            <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
+                            <button type="reset" class="btn btn-raised btn-secondary btn-sm" onclick="cleanFormAddBook()"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
                             &nbsp; &nbsp;
-                            <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; SAVE</button>
+                            <button type="submit" class="btn btn-raised btn-info btn-sm"  formaction="btnAddCategory" id="btnCategoryAdd"><i class="far fa-save"></i> &nbsp; SAVE</button>
                         </p>
                     </form>
                 </div>

@@ -32,13 +32,17 @@ Route::get('admin/dashboard',[AdminController::class,'index']);
 
 Route::get('admin/books',[BookController::class,'index']);
 Route::post('admin/btnAddBook',[BookController::class,'create']);
+Route::post('admin/updatebook',[BookController::class,'show']);
+Route::post('admin/btnBookEdit',[BookController::class,'edit']);
 
 Route::get('admin/loans',[LoansController::class,'index']);
 
 Route::get('admin/categories',[CategoryController::class,'index']);
 Route::get('admin/getListCategories',[CategoryController::class,'show']);
+Route::post('admin/btnAddCategory',[CategoryController::class,'create']);
 
 Route::get('admin/users',[UserController::class,'viewUsers']);
+Route::post('admin/btnAddUser',[UserController::class,'create']);
 
 
 /*Route::resource('auth',UserController::class);

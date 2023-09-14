@@ -5,17 +5,6 @@ window.onload = function () {
         var alertElement = document.querySelector('.alert');
         alertElement.style.display = 'none';
     }, 5000);
-
-    if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/books') {
-        hideAddBook();
-        resertDateToday('txtPublishedDate');
-    }else if ((window.location.href).substring(0, 52) === 'http://localhost/libraryexam/public/admin/categories') {
-        hideAddCategory();
-    }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/loans') {
-        hideAddLoans();
-    }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/users') {
-        hideAddUsers();
-    }
 };
 
 function resertDateToday(input){
@@ -27,7 +16,7 @@ function resertDateToday(input){
 
 
 /* Functions to show and hide sections */
-function hideListBook(){
+function showAddBook(){
     document.getElementById('addBook').style.display = 'block';
     document.getElementById('listBook').style.display = 'none';
 
@@ -47,37 +36,37 @@ function hideListBook(){
     });
 }
 
-function hideAddBook(){
+function showListBook(){
     document.getElementById('listBook').style.display = 'block';
     document.getElementById('addBook').style.display = 'none';
 }
 
-function hideListCategory(){
+function showAddCategory(){
     document.getElementById('addCategory').style.display = 'block';
     document.getElementById('listCategory').style.display = 'none';
 }
 
-function hideAddCategory(){
+function showListCategory(){
     document.getElementById('listCategory').style.display = 'block';
     document.getElementById('addCategory').style.display = 'none';
 }
 
-function hideListLoans(){
+function showAddLoan(){
     document.getElementById('addLoan').style.display = 'block';
     document.getElementById('listLoan').style.display = 'none';
 }
 
-function hideAddLoans(){
+function showListLoan(){
     document.getElementById('listLoan').style.display = 'block';
     document.getElementById('addLoan').style.display = 'none';
 }
 
-function hideListUsers(){
+function showAddUser(){
     document.getElementById('addUser').style.display = 'block';
     document.getElementById('listUser').style.display = 'none';
 }
 
-function hideAddUsers(){
+function showListUser(){
     document.getElementById('listUser').style.display = 'block';
     document.getElementById('addUser').style.display = 'none';
 }
@@ -88,4 +77,15 @@ function cleanFormAddBook(){
     resertDateToday('txtPublishedDate');
     $('#txtAuthor').val("");
     $('#txtCategory').val("0");
+}
+
+function cleanFormAddBook(){
+    $('#txtNameUser').val("");
+    $('#txtEmailUser').val("");
+    $('#txtPasswordUser').val("");
+}
+
+function leanFormAddBook(){
+    $('#txtNameCategory').val("");
+    $('#txtDescriptionCategory').val("");
 }

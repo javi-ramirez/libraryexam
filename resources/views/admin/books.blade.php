@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <ul class="full-box list-unstyled page-nav-tabs">
                 <li>
-                    <a onclick="hideListBook()"><i class="fas fa-plus fa-fw"></i> &nbsp; ADD BOOK</a>
+                    <a onclick="showAddBook()"><i class="fas fa-plus fa-fw"></i> &nbsp; ADD BOOK</a>
                 </li>
                 <li>
-                    <a onclick="hideAddBook()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
+                    <a onclick="showListBook()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
                 </li>
             </ul>
         </div>
@@ -58,9 +58,11 @@
                                 <td>{{$book->status}}</td>
                                 <td>{{$book->user}}</td>
                                 <td>
-                                    <a href="item-update.html" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
+                                    <form method="post" autocomplete="off" id="formShowBook{{$book->id}}" enctype="multipart/form-data">
+				                    {{csrf_field()}}
+                                        <input type="hidden" name="idBookShow" value="{{$book->id}}">
+                                        <button type="submit" class="btn btn-success" formaction="updatebook" id="btnBookShow{{$book->id}}"><i class="fas fa-sync-alt"></i></button>
+                                    </form>
                                 </td>
                                 <td>
                                     <form action="">
@@ -82,10 +84,10 @@
                 
             </section>
            
-            <section id="addBook">
+            <section id="addBook" >
                 <!--CONTENT-->
                 <div class="container-fluid">
-                    <form method="post" class="form-neon" autocomplete="off" id="formAddBook" enctype="multipart/form-data">
+                    <form method="post" class="form-neon needs-validation" autocomplete="off" id="formAddBook" enctype="multipart/form-data">
 				    {{csrf_field()}}
                         <fieldset>
                             <legend><i class="far fa-plus-square"></i> &nbsp; Book information</legend>
@@ -95,18 +97,27 @@
                                         <div class="form-group">
                                             <label for="txtName" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtName" id="txtName" maxlength="255">
+                                            <div class="invalid-feedback" id="invalid-name">
+                                                Please choose a Name.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txtPublishedDate" class="bmd-label-floating">Published date</label>
                                             <input type="date" class="form-control" name="txtPublishedDate" id="txtPublishedDate">
+                                            <div class="invalid-feedback" id="invalid-published">
+                                                Please choose a Published Date.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txtAuthor" class="bmd-label-floating">Author</label>
                                             <input type="text" class="form-control" name="txtAuthor" id="txtAuthor" maxlength="255">
+                                            <div class="invalid-feedback" id="invalid-author">
+                                                Please choose a Author.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -129,6 +140,9 @@
                                             id='txtCategory'
                                             multiple='multiple'
                                             name='txtCategory'>
+                                            <div class="invalid-feedback" id="invalid-categories">
+                                                Please choose a Category(ies).
+                                            </div>
 
                                         </div>
                                     </div>
@@ -144,7 +158,6 @@
                     </form>
                 </div>
             </section>
-            
         </div>
     </section>
 

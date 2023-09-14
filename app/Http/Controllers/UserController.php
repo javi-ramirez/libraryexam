@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -57,9 +58,48 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $data)
     {
         //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $existenceEmail = DB::table('user')
+                ->select('id','email')
+                ->get();
+
+                foreach($existenceEmail as $email)
+                {
+                    if($email->email == $data->input('txtEmailUser'))
+                    {
+                        DB::rollback();
+                        return redirect ('admin/users')->with('warning','Duplicate email. The email of the user is already registered.');
+                    }
+                }
+                
+                if(DB::table('user')->insert([
+                    'name' => $data->input('txtNameUser'),
+                    'email' => $data->input('txtEmailUser'),
+                    'password' => md5($data->input('txtPasswordUser')),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ])){
+                    
+                    DB::commit(); 
+                    return redirect ('admin/users')->with('message','Successful user registration.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/users')->with('warning','Error when trying to add the user. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                return redirect('admin/users')->with('warning','Error when trying to add the user. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
     }
 
     /**

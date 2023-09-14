@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <ul class="full-box list-unstyled page-nav-tabs">
                 <li>
-                    <a onclick="hideListLoans()"><i class="fas fa-plus fa-fw"></i> &nbsp; ADD LOAN</a>
+                    <a onclick="showAddLoan()"><i class="fas fa-plus fa-fw"></i> &nbsp; ADD LOAN</a>
                 </li>
                 <li>
-                    <a onclick="hideAddLoans()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
+                    <a onclick="showListLoan()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
                 </li>
             </ul>
         </div>
