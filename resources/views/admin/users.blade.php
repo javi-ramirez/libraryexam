@@ -38,6 +38,7 @@
                                 <th>ID</th>
                                 <th>NAME</th>
                                 <th>EMAIL</th>
+                                <th>PHONE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,6 +48,7 @@
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
+                                <td>{{$user->phone}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -69,7 +71,7 @@
                             <legend><i class="far fa-plus-square"></i> &nbsp; User information</legend>
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txtNameUser" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtNameUser" id="txtNameUser" maxlength="255">
@@ -78,7 +80,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txtEmailUser" class="bmd-label-floating">Email</label>
                                             <input type="text" class="form-control" name="txtEmailUser" id="txtEmailUser" maxlength="255">
@@ -87,7 +89,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtPhoneUser" class="bmd-label-floating">Phone</label>
+                                            <input type="text" class="form-control" name="txtPhoneUser" id="txtPhoneUser" maxlength="10">
+                                            <div class="invalid-feedback" id="invalid-phoneUser">
+                                                Please choose a Phone.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txtPasswordUser" class="bmd-label-floating">Password</label>
                                             <input type="password" class="form-control" name="txtPasswordUser" id="txtPasswordUser" maxlength="255">

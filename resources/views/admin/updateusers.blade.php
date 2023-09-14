@@ -37,7 +37,7 @@
                             <legend><i class="far fa-plus-square"></i> &nbsp; Account information</legend>
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-4">
                                         <input type="hidden" name="idUserEdit" id="idUserEdit" value="{{$dataUser[0]->id}}"> 
                                         <div class="form-group">
                                             <label for="txtNameUserEdit" class="bmd-label-floating">Name</label>
@@ -47,12 +47,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-4">
                                         <div class="form-group">
                                             <label for="txtEmailUserEdit" class="bmd-label-floating">Email</label>
                                             <input type="text" class="form-control" name="txtEmailUserEdit" id="txtEmailUserEdit" maxlength="255" value="{{$dataUser[0]->email}}">
                                             <div class="invalid-feedback" id="invalid-emailUserEdit">
                                                 Please choose a Email.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group">
+                                            <label for="txtPhoneUserEdit" class="bmd-label-floating">Phone</label>
+                                            <input type="text" class="form-control" name="txtPhoneUserEdit" id="txtPhoneUserEdit" maxlength="10" value="{{$dataUser[0]->phone}}">
+                                            <div class="invalid-feedback" id="invalid-phoneUserEdit">
+                                                Please choose a Phone.
                                             </div>
                                         </div>
                                     </div>

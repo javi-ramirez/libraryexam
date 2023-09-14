@@ -23,6 +23,9 @@
                 <li>
                     <a onclick="showListLoan()"><class="active" href="item-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LIST</a>
                 </li>
+                <li>
+                    <a onclick="showReturnLoan()"><i class="fas fa-book-reader fa-fw"></i> &nbsp; MY LOANS</a>
+                </li>
             </ul>
         </div>
         
@@ -62,8 +65,6 @@
                 <div class="pagination justify-content-center"> 
                     {{ $dataLoans->links()}}
                 </div>
-
-                
             </section>
            
             <section id="addLoan">
@@ -127,6 +128,37 @@
                 </div>
             </section>
             
+            <section id="returnLoan">
+                <div class="table-responsive">
+                    <table class="table table-dark table-sm custom-table">
+                        <thead>
+                            <tr class="text-center roboto-medium">
+                                <th>ID</th>
+                                <th>BOOK</th>
+                                <th>LOAN DATE</th>
+                                <th>RETURN LOAN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataLoansUser as $loanUser)
+                            
+                            <tr class="text-center" >
+                                <td>{{$loanUser->id}}</td>
+                                <td>{{$loanUser->bookName}}</td>
+                                <td>{{$loanUser->loan_date}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn btn-success returnLoan-button" id="btnReturnLoan{{$loanUser->id}}" data-id="{{$loanUser->id}}"><i class="fas fa-sync-alt"></i></button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination justify-content-center"> 
+                    {{ $dataLoansUser->links()}}
+                </div>
+            </section>
         </div>
     </section>
 

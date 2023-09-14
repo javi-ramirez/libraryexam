@@ -100,7 +100,7 @@ window.onload = function () {
             }
         });
     
-        /*  Delete book buttom */
+        /*  Delete book button */
         $('.delete-button').on('click', function (e) {
             e.preventDefault(); 
 
@@ -176,7 +176,7 @@ window.onload = function () {
             }
         });
 
-        /*  Delete category buttom */
+        /*  Delete category button */
         $('.deleteCategory-button').on('click', function (e) {
             e.preventDefault(); 
 
@@ -260,6 +260,29 @@ window.onload = function () {
             }
         });
 
+        /*  Retrun loan button */
+        $('.returnLoan-button').on('click', function (e) {
+            e.preventDefault(); 
+
+            // Obtiene el valor del atributo data-id del botón actual
+            const loanId = $(this).data('id');
+            
+            Swal.fire({
+                title: 'Are you sure you want to return the book?',
+                text: 'The borrowed book is about to come back',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    window.location='returnloan/' + loanId;
+                }
+            });
+        });    
+
     }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/users') {
         showListUser();
 
@@ -267,6 +290,7 @@ window.onload = function () {
         const formAddUser = document.getElementById("formAddUser");
         const name = document.getElementById("txtNameUser");
         const email = document.getElementById("txtEmailUser");
+        const phone = document.getElementById("txtPhoneUser");
         const password = document.getElementById("txtPasswordUser");
 
         // Event click Add User
@@ -274,7 +298,8 @@ window.onload = function () {
             if (
                 name.value.trim() === "" || 
                 email.value.trim() === "" || 
-                password.value.trim() === "" 
+                password.value.trim() === "" || 
+                phone.value.trim() === ""
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
@@ -300,6 +325,14 @@ window.onload = function () {
                 } else {
                     $("#invalid-passwordUser").css("display", "none");
                     $("#txtPasswordUser").removeClass("is-invalid");
+                }
+
+                if (!phone.value) {
+                    $("#invalid-phoneUser").css("display", "block");
+                    $("#txtPhoneUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-phoneUser").css("display", "none");
+                    $("#txtPhoneUser").removeClass("is-invalid");
                 }
             }
         });
@@ -331,6 +364,16 @@ window.onload = function () {
             } else {
                 $("#invalid-passwordUser").css("display", "none");
                 $("#txtPasswordUser").removeClass("is-invalid");
+            }
+        });
+
+        phone.addEventListener("change", function(event) {
+            if (!phone.value) {
+                $("#invalid-phoneUser").css("display", "block");
+                $("#txtPhoneUser").addClass("is-invalid");
+            } else {
+                $("#invalid-phoneUser").css("display", "none");
+                $("#txtPhoneUser").removeClass("is-invalid");
             }
         });
 
@@ -498,6 +541,7 @@ window.onload = function () {
         const name = document.getElementById("txtNameUserEdit");
         const email = document.getElementById("txtEmailUserEdit");
         const currentPass = document.getElementById("txtPasswordUserEdit");
+        const phone = document.getElementById("txtPhoneUserEdit");
         const newPass = document.getElementById("txtNewPasswordUserEdit");
 
         // Event click Edit User
@@ -506,7 +550,8 @@ window.onload = function () {
                 name.value.trim() === "" || 
                 email.value.trim() === "" || 
                 currentPass.value.trim() === "" || 
-                newPass.value.trim() === "" 
+                newPass.value.trim() === "" || 
+                phone.value.trim() === "" 
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
@@ -540,6 +585,14 @@ window.onload = function () {
                 } else {
                     $("#invalid-newpasswordUserEdit").css("display", "none");
                     $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!phone.value) {
+                    $("#invalid-phoneUserEdit").css("display", "block");
+                    $("#txtPhoneUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-phoneUserEdit").css("display", "none");
+                    $("#txtPhoneUserEdit").removeClass("is-invalid");
                 }
             }
         });
@@ -584,7 +637,17 @@ window.onload = function () {
             }
         });
 
-        /*  Delete user buttom */
+        phone.addEventListener("change", function(event) {
+            if (!phone.value) {
+                $("#invalid-phoneUserEdit").css("display", "block");
+                $("#txtPhoneUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-phoneUserEdit").css("display", "none");
+                $("#txtPhoneUserEdit").removeClass("is-invalid");
+            }
+        });
+
+        /*  Delete user button */
         $('.deleteUser-button').on('click', function (e) {
             e.preventDefault(); 
 

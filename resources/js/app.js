@@ -54,10 +54,18 @@ function showListCategory(){
 function showAddLoan(){
     document.getElementById('addLoan').style.display = 'block';
     document.getElementById('listLoan').style.display = 'none';
+    document.getElementById('returnLoan').style.display = 'none';
 }
 
 function showListLoan(){
     document.getElementById('listLoan').style.display = 'block';
+    document.getElementById('addLoan').style.display = 'none';
+    document.getElementById('returnLoan').style.display = 'none';
+}
+
+function showReturnLoan(){
+    document.getElementById('returnLoan').style.display = 'block';
+    document.getElementById('listLoan').style.display = 'none';
     document.getElementById('addLoan').style.display = 'none';
 }
 

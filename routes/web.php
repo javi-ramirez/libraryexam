@@ -39,6 +39,7 @@ Route::get('admin/getAvailableBook/{id}',[BookController::class,'available'])->n
 
 Route::get('admin/loans',[LoansController::class,'index']);
 Route::post('admin/btnAddLoan',[LoansController::class,'create']);
+Route::get('admin/returnloan/{id}',[LoansController::class,'messagesender'])->name('return.loan');
 
 Route::post('admin/btnAddNotification',[NotificationsUsersController::class,'create']);
 

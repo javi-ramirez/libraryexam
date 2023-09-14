@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Loans;
 use App\Models\Book;
+use App\Models\NotificationsUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Twilio\Rest\Client;
 
 class LoansController extends Controller
 {
@@ -48,6 +50,25 @@ class LoansController extends Controller
             ->orderBy('loans.id', 'desc')
             ->paginate(5); 
 
+            $dataLoansUser = Loans::select(
+                'loans.id',
+                'user.name as userName',
+                'books.name as bookName',
+                DB::raw('DATE_FORMAT(loan_date, "%M %e, %Y at %h:%i:%s %p") as loan_date'),
+                DB::raw('IF(loans.status = 1, "On load", "Returned") AS status'),
+                DB::raw('DATE_FORMAT(return_date, "%M %e, %Y at %h:%i:%s %p") as return_date'),
+                'loans.created_at',
+                'loans.updated_at'
+            )
+            ->join('user', 'loans.user_id', '=', 'user.id') // Corregido 'user' a 'users'
+            ->join('books', 'loans.book_id', '=', 'books.id')
+            ->where('books.status','!=',0)
+            ->where('user.status','!=',0)
+            ->where('loans.status','!=',0)
+            ->where('user.id','=',$idSession)
+            ->orderBy('loans.id', 'desc')
+            ->paginate(5); 
+
             $dataBooks = Book::select(
                 'books.id',
                 'books.name',
@@ -57,10 +78,91 @@ class LoansController extends Controller
             ->where('books.status', '!=', 0)
             ->get();
 
-            return view ('admin/loans',['dataUser'=>$dataUser,'dataLoans'=>$dataLoans,'dataBooks'=>$dataBooks]);	
+            return view ('admin/loans',['dataUser'=>$dataUser,'dataLoans'=>$dataLoans,'dataBooks'=>$dataBooks,'dataLoansUser'=>$dataLoansUser]);	
         }
         else
         {
+            return redirect('/')->with('warning','Session expired.');;
+		}
+    }
+
+    public function messagesender($idLoan){
+        //
+        if (session()->has('s_identificador') ) 
+		{
+            try
+            {
+                DB::beginTransaction();
+
+                $consultingSession = DB::table('user')
+                ->select('phone')
+                ->where('email','=',session('s_identificador'))
+                ->get();
+
+                $idJson = json_decode(json_encode($consultingSession),true);
+                $phone = "+52".implode($idJson[0]);
+
+                $consultingIdBook = DB::table('loans')
+                ->select('book_id')
+                ->where('id','=',$idLoan)
+                ->get();
+
+                $idJsonBook = json_decode(json_encode($consultingIdBook),true);
+                $idBook = implode($idJsonBook[0]);
+
+                $Loans = Loans::find($idLoan);
+                $Loans->status = 0;
+                $Loans->return_date = Carbon::now();
+                $Loans->updated_at = Carbon::now();
+                
+                if($Loans->save()){
+
+                    $existenceNotification = DB::table('notifications_users')
+                    ->select('notifications_users.id as notiId',
+                            'notifications_users.status',
+                            'books.name as booksName',
+                            'user.id as userId',
+                            'user.phone',
+                            'user.email',
+                            'user.name as userName'
+                    )
+                    ->join('user', 'notifications_users.user_id', '=', 'user.id')
+                    ->join('books', 'notifications_users.book_id', '=', 'books.id')
+                    ->where('notifications_users.status','!=',0)
+                    ->where('notifications_users.book_id','=',$idBook)
+                    ->get();
+
+                    foreach($existenceNotification as $notification)
+                    {
+                        $sid = env('TWILIO_SID');
+                        $token = env('TWILIO_AUTH_TOKEN');
+                        $twilio = new Client($sid, $token);
+
+                        // Send menssage SMS
+                        $message = $twilio->messages
+                        ->create($phone, [
+                            "from" => env('TWILIO_PHONE_NUMBER'), 
+                            "body" => "Dear ".$notification->userName." with email: ".$notification->email.", we are pleased to notify you that the book ".$notification->booksName." is once again available for loan."
+                        ]);
+
+                        $Notifications = NotificationsUsers::find($notification->notiId);
+                        $Notifications->status = 0;
+                        $Notifications->updated_at = Carbon::now();
+                        $Notifications->save();
+                    }
+                    
+                    DB::commit(); 
+                    return redirect ('admin/loans')->with('message','Successful loan return.');
+                }else{
+                    DB::rollback();
+                    return redirect('admin/loans')->with('warning','Error when trying to return the loan. Please try again.');
+                } 
+            }catch (\Exception $e) {
+                echo $e;
+                die();
+                return redirect('admin/loans')->with('warning','Error when trying to return the loan. Please try again.');
+            }
+        } else{
             return redirect('/')->with('warning','Session expired.');;
 		}
     }

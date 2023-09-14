@@ -42,6 +42,7 @@ class UserController extends Controller
                 'id',
                 'name',
                 'email',
+                'phone',
                 'created_at',
                 'updated_at',
             )
@@ -86,6 +87,7 @@ class UserController extends Controller
                 if(DB::table('user')->insert([
                     'name' => $data->input('txtNameUser'),
                     'email' => $data->input('txtEmailUser'),
+                    'phone' => $data->input('txtPhoneUser'),
                     'password' => md5($data->input('txtPasswordUser')),
                     'status' => 1,
                     'created_at' => Carbon::now(),
@@ -135,7 +137,7 @@ class UserController extends Controller
                 $idSession = implode($idJson[0]);
                 
                 $dataUser = DB::table('user')
-                ->select('id','name','email','password')
+                ->select('id','name','email','phone','password')
                 ->where('id', '=', $idSession)
                 ->get();
 
@@ -203,6 +205,7 @@ class UserController extends Controller
                     ->update([
                         'name' => $data->input('txtNameUserEdit'),
                         'email' => $data->input('txtEmailUserEdit'),
+                        'phone' => $data->input('txtPhoneUserEdit'),
                         'password' => md5($data->input('txtNewPasswordUserEdit')),
                         'updated_at' => Carbon::now(),
                     ])
