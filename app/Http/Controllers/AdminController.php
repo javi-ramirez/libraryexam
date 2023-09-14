@@ -58,6 +58,7 @@ class AdminController extends Controller
         ->select('email', 'password')
         ->where('email', '=', $emailUser)
         ->where('password', '=', $passwrodUser)
+        ->where('status','!=',0)
         ->get();
 
         if ($consultingDataUser!="[]")

@@ -45,6 +45,7 @@ class UserController extends Controller
                 'created_at',
                 'updated_at',
             )
+            ->where('status','!=',0)
             ->paginate(5);     
 
             return view ('admin/users',['dataUser'=>$dataUser,'dataUsers'=>$dataUsers]);	
@@ -84,6 +85,7 @@ class UserController extends Controller
                     'name' => $data->input('txtNameUser'),
                     'email' => $data->input('txtEmailUser'),
                     'password' => md5($data->input('txtPasswordUser')),
+                    'status' => 1,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ])){

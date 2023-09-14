@@ -1,4 +1,9 @@
 window.onload = function () {
+    //Hide alerts after 5 seconds
+    setTimeout(function() {
+        var alertElement = document.querySelector('.alert');
+        alertElement.style.display = 'none';
+    }, 5000);
 
     if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/books') {
         showListBook();
@@ -96,7 +101,28 @@ window.onload = function () {
             }
         });
     
-        
+        /*  Delete book buttom */
+        $('.delete-button').on('click', function (e) {
+            e.preventDefault(); 
+
+            // Obtiene el valor del atributo data-id del botón actual
+            const bookId = $(this).data('id');
+            
+            Swal.fire({
+                title: 'Are you sure to delete the book?',
+                text: 'You are about to delete the book',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                if (result.value) {
+                    window.location='deletebook/' + bookId;
+                }
+            });
+        });    
     }else if ((window.location.href).substring(0, 52) === 'http://localhost/libraryexam/public/admin/categories') {
         showListCategory();
 
@@ -332,6 +358,57 @@ window.onload = function () {
             } else {
                 $("#invalid-categoriesEdit").css("display", "none");
                 $("#txtCategoryEdit").removeClass("is-invalid");
+            }
+        });
+    }else if ((window.location.href).substring(0, 56) === 'http://localhost/libraryexam/public/admin/updatecategory') {
+        // Form Edit Category
+        const formEditCategory = document.getElementById("formEditCategory");
+        const name = document.getElementById("txtNameCategoryEdit");
+        const description = document.getElementById("txtDescriptionCategoryEdit");
+
+        // Event click Edit Category
+        formEditCategory.addEventListener("submit", function(event) {
+            if (
+                name.value.trim() === "" || 
+                description.value.trim() === "" 
+            ) {
+                event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
+
+                if (!name.value) {
+                    $("#invalid-nameCategoryEdit").css("display", "block");
+                    $("#txtNameCategoryEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameCategoryEdit").css("display", "none");
+                    $("#txtNameCategoryEdit").removeClass("is-invalid");
+                }
+        
+                if (!description.value) {
+                    $("#invalid-descriptionCategoryEdit").css("display", "block");
+                    $("#txtDescriptionCategoryEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-descriptionCategoryEdit").css("display", "none");
+                    $("#txtDescriptionCategoryEdit").removeClass("is-invalid");
+                }
+            }
+        });
+
+        name.addEventListener("change", function(event) {
+            if (!name.value) {
+                $("#invalid-nameCategoryEdit").css("display", "block");
+                $("#txtNameCategoryEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-nameCategoryEdit").css("display", "none");
+                $("#txtNameCategoryEdit").removeClass("is-invalid");
+            }
+        });
+
+        description.addEventListener("change", function(event) {
+            if (!description.value) {
+                $("#invalid-descriptionCategoryEdit").css("display", "block");
+                $("#txtDescriptionCategoryEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-descriptionCategoryEdit").css("display", "none");
+                $("#txtDescriptionCategoryEdit").removeClass("is-invalid");
             }
         });
     }

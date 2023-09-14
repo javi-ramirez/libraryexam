@@ -17,6 +17,7 @@ return new class extends Migration
             $table->tinyText('name',255)->nullable(false);
             $table->tinyText('author',255)->nullable(false);
             $table->date('published_date')->nullable(false);
+            $table->integer('status')->nullable(false);
             $table->timestamps();
         });
     }

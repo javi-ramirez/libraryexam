@@ -65,11 +65,11 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <!--<form method="post" autocomplete="off" id="formDeleteBook{{$book->id}}" enctype="multipart/form-data">
+				                    {{csrf_field()}} 
+                                        <input type="hidden" name="idBookDelete" value="{{$book->id}}"> -->
+                                        <button type="submit" class="btn btn-warning delete-button" id="btnBookDelete{{$book->id}}" data-id="{{$book->id}}"><i class="far fa-trash-alt"></i></button>
+                                    <!--</form>-->
                                 </td>
                             </tr>
                             @endforeach

@@ -50,9 +50,11 @@
                                 <td>{{$category->name}}</td>
                                 <td>{{$category->description}}</td>
                                 <td>
-                                    <a href="item-update.html" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
+                                    <form method="post" autocomplete="off" id="formShowCategory{{$category->id}}" enctype="multipart/form-data">
+				                    {{csrf_field()}}
+                                        <input type="hidden" name="idCategoryShow" value="{{$category->id}}">
+                                        <button type="submit" class="btn btn-success" formaction="updatecategory" id="btnCategoryShow{{$category->id}}"><i class="fas fa-sync-alt"></i></button>
+                                    </form>
                                 </td>
                                 <td>
                                     <form action="">

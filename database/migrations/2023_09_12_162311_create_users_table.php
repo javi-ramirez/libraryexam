@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name',255)->nullable(false);
             $table->string('email',255)->nullable(false);
             $table->string('password',255)->nullable(false);
+            $table->integer('status')->nullable(false);
             $table->timestamps();
         });
     }

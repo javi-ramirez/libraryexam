@@ -41,6 +41,7 @@ class LoansController extends Controller
             )
             ->join('user', 'loans.user_id', '=', 'user.id') // Corregido 'user' a 'users'
             ->join('books', 'loans.book_id', '=', 'books.id')
+            ->where('books.status','!=',0)
             ->paginate(5); 
 
             return view ('admin/loans',['dataUser'=>$dataUser,'dataLoans'=>$dataLoans]);	
