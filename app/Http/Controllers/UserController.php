@@ -46,6 +46,7 @@ class UserController extends Controller
                 'updated_at',
             )
             ->where('status','!=',0)
+            ->orderBy('id', 'desc')
             ->paginate(5);     
 
             return view ('admin/users',['dataUser'=>$dataUser,'dataUsers'=>$dataUsers]);	

@@ -38,6 +38,7 @@ class CategoryController extends Controller
                 'updated_at',
             )
             ->where('status','!=',0)
+            ->orderBy('id', 'desc')
             ->paginate(5);     
 
             return view ('admin/categories',['dataUser'=>$dataUser,'dataCategories'=>$dataCategories]);	

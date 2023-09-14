@@ -12,7 +12,7 @@
         <!-- Page header -->
         <div class="full-box page-header">
             <h3 class="text-left">
-                <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; CATEGORIES
+                <i class="fas fa-bookmark fa-fw"></i> &nbsp; CATEGORIES
             </h3>
         </div>
         <div class="container-fluid">
@@ -105,7 +105,7 @@
                         </fieldset>
                         <br><br><br>
                         <p class="text-center" style="margin-top: 40px;">
-                            <button type="reset" class="btn btn-raised btn-secondary btn-sm" onclick="cleanFormAddBook()"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
+                            <button type="reset" class="btn btn-raised btn-secondary btn-sm" onclick="cleanFormAddCategory()"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
                             &nbsp; &nbsp;
                             <button type="submit" class="btn btn-raised btn-info btn-sm"  formaction="btnAddCategory" id="btnCategoryAdd"><i class="far fa-save"></i> &nbsp; SAVE</button>
                         </p>

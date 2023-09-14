@@ -12,7 +12,7 @@
         <!-- Page header -->
         <div class="full-box page-header">
             <h3 class="text-left">
-                <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; CATEGORIES
+                <i class="fas fa-bookmark fa-fw"></i> &nbsp; CATEGORIES
             </h3>
         </div>
         <div class="container-fluid">

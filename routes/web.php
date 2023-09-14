@@ -7,7 +7,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\LiteraryGenreController;
-use App\Models\Book;
+use App\Http\Controllers\NotificationsUsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +35,12 @@ Route::post('admin/btnAddBook',[BookController::class,'create']);
 Route::post('admin/updatebook',[BookController::class,'show']);
 Route::post('admin/btnBookEdit',[BookController::class,'edit']);
 Route::get('admin/deletebook/{id}',[BookController::class,'delete'])->name('delete.book');
+Route::get('admin/getAvailableBook/{id}',[BookController::class,'available'])->name('available.book');
 
 Route::get('admin/loans',[LoansController::class,'index']);
+Route::post('admin/btnAddLoan',[LoansController::class,'create']);
+
+Route::post('admin/btnAddNotification',[NotificationsUsersController::class,'create']);
 
 Route::get('admin/categories',[CategoryController::class,'index']);
 Route::get('admin/getListCategories',[CategoryController::class,'list']);

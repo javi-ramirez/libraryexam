@@ -12,7 +12,7 @@
         <!-- Page header -->
         <div class="full-box page-header">
             <h3 class="text-left">
-                <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LOANS
+                <i class="fas fa-book-reader fa-fw"></i> &nbsp; LOANS
             </h3>
         </div>
         <div class="container-fluid">
@@ -69,44 +69,43 @@
             <section id="addLoan">
                 <!--CONTENT-->
                 <div class="container-fluid">
-                    <form action="" class="form-neon" autocomplete="off">
+                    <form method="post" class="form-neon needs-validation" autocomplete="off" id="formAddLoan" enctype="multipart/form-data">
+				    {{csrf_field()}}
                         <fieldset>
-                            <legend><i class="far fa-plus-square"></i> &nbsp; Book information</legend>
+                            <legend><i class="far fa-plus-square"></i> &nbsp; Loan information</legend>
                             <div class="container-fluid">
                                 <div class="row">
-                                <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txtName" class="bmd-label-floating">Name</label>
-                                            <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="txtName" id="txtName" maxlength="255">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <label for="txtAuthor" class="bmd-label-floating">Author</label>
-                                            <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="txtAuthor" id="txtAuthor" maxlength="255">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <label for="txtPublishedDate" class="bmd-label-floating">Published date</label>
-                                            <input type="date" class="form-control" name="txtPublishedDate" id="txtPublishedDate">
+                                            <label for="txtUserLoan" class="bmd-label-floating">User</label>
+                                            <label class="form-control" name="txtUserLoan" id="txtUserLoan">{{$dataUser[0]->name}}</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="item_estado" class="bmd-label-floating">Estado</label>
-                                            <select class="form-control" name="item_estado" id="item_estado">
-                                                <option value="" selected="" disabled="">Seleccione una opción</option>
-                                                <option selected="" value="Habilitado">Habilitado</option>
-                                                <option value="Deshabilitado">Deshabilitado</option>
+                                            <label for="txtBookLoan" class="bmd-label-floating">Book</label>
+                                            <select class="form-control" name="txtBookLoan" id="txtBookLoan">
+                                                <option value="0" selected="">Select a book</option>
+                                                @foreach ($dataBooks as $book)
+                                                    <option value="{{$book->id}}">{{$book->name}} - {{$book->author}}</option>
+    
+                                                @endforeach
                                             </select>
+                                            <div class="invalid-feedback" id="invalid-bookLoan">
+                                                Please choose a Book.
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-12">
                                         <div class="form-group">
-                                            <label for="item_detalle" class="bmd-label-floating">Detalle</label>
-                                            <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="item_detalle" id="item_detalle" maxlength="190">
+                                            <label for="chkNotification" class="bmd-label-floating">Availability.</label>
+                                            <br>
+                                            <span id="bookNotAvailable" class="textNotAvailable">
+                                                Book not available. Click on Notify me when the book is available to receive a notification.
+                                            </span>
+                                            <span id="bookAvailable" class="textAvailable">
+                                                Available book. You can request the loan.
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -114,9 +113,15 @@
                         </fieldset>
                         <br><br><br>
                         <p class="text-center" style="margin-top: 40px;">
-                            <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
-                            &nbsp; &nbsp;
-                            <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; SAVE</button>
+                            <span id="sectionButtonAddLoan">
+                                <button type="reset" class="btn btn-raised btn-secondary btn-sm" onclick="cleanFormAddLoan()"><i class="fas fa-paint-roller"></i> &nbsp; CLEAN</button>
+                                &nbsp; &nbsp;
+                                <button type="submit" class="btn btn-raised btn-info btn-sm" formaction="btnAddLoan" id="btnLoanAdd"><i class="far fa-save"></i> &nbsp; Apply for a loan</button>
+                                &nbsp; &nbsp;
+                            </span>
+                            <span id="sectionButtonNotiLoan">
+                                <button type="submit" class="btn btn-raised btn-secondary btn-sm notification-button" formaction="btnAddNotification" ><i class="fas fa-bell"></i> &nbsp; NOTIFY ME</button>
+                            </span>
                         </p>
                     </form>
                 </div>

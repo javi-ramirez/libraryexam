@@ -79,13 +79,21 @@ function cleanFormAddBook(){
     $('#txtCategory').val("0");
 }
 
-function cleanFormAddBook(){
+function cleanFormAddUser(){
     $('#txtNameUser').val("");
     $('#txtEmailUser').val("");
     $('#txtPasswordUser').val("");
 }
 
-function leanFormAddBook(){
+function cleanFormAddCategory(){
     $('#txtNameCategory').val("");
     $('#txtDescriptionCategory').val("");
+}
+
+function cleanFormAddLoan(){
+    $('#txtBookLoan').val("0");
+
+    $("#bookNotAvailable").css("display", "nose");
+    $("#bookAvailable").css("display", "none");
+                        
 }

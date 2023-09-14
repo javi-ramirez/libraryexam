@@ -47,6 +47,7 @@ class BookController extends Controller
             ->join('categories', 'literary_genres.category_id', '=', 'categories.id')
             ->where('books.status','!=',0)
             ->groupBy('books.id', 'books.name', 'author', 'published_date', 'books.created_at', 'books.updated_at')
+            ->orderBy('books.id', 'desc')
             ->paginate(5);     
 
             $dataCategories = Category::select(
@@ -314,6 +315,34 @@ class BookController extends Controller
                 } 
             }catch (\Exception $e) {
                 return redirect('admin/books')->with('warning','Error when trying to delete the book. Please try again.');
+            }
+        } else{
+            return redirect('/')->with('warning','Session expired.');;
+		}
+    }
+
+    public function available($idBook){
+        if (session()->has('s_identificador') ) 
+		{
+            $isLoan = Book::select(
+                DB::raw('IF(EXISTS(SELECT 1 FROM loans WHERE book_id = books.id AND return_date IS NULL AND loans.status=1), "1", "0") AS status'),
+            )
+            ->join('literary_genres', 'books.id', '=', 'literary_genres.book_id')
+            ->join('categories', 'literary_genres.category_id', '=', 'categories.id')
+            ->where('books.status','!=',0)
+            ->where('books.id','=',$idBook)
+            ->groupBy('books.id', 'books.name', 'author', 'published_date', 'books.created_at', 'books.updated_at')
+            ->get();    
+
+            foreach($isLoan as $loan)
+            {
+                if($loan->status == 1)
+                {
+                    DB::rollback();
+                    return response('1');
+                }else{
+                    return response('0');
+                }
             }
         } else{
             return redirect('/')->with('warning','Session expired.');;

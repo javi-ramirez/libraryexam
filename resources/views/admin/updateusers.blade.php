@@ -12,7 +12,7 @@
         <!-- Page header -->
         <div class="full-box page-header">
             <h3 class="text-left">
-                <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; {{$dataUser[0]->name}}
+                <i class="fas fa-user fa-fw"></i> &nbsp; {{$dataUser[0]->name}}
             </h3>
         </div>
         <div class="container-fluid">

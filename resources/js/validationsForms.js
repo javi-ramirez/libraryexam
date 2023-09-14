@@ -200,6 +200,66 @@ window.onload = function () {
         });    
     }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/loans') {
         showListLoan();
+
+        $("#bookAvailable").css("display", "none");
+        $("#bookNotAvailable").css("display", "none");
+        $("#sectionButtonNotiLoan").css("display", "none");
+ 
+        const selectBook = document.getElementById("txtBookLoan");
+        selectBook.addEventListener("change", function(event) {
+            if (!selectBook.value || selectBook.value==0) {
+                $("#invalid-bookLoan").css("display", "block");
+                $("#txtBookLoan").addClass("is-invalid");
+            } else {
+                $("#invalid-bookLoan").css("display", "none");
+                $("#txtBookLoan").removeClass("is-invalid");
+            }
+
+            $.ajax({
+                url: 'getAvailableBook/'+selectBook.value,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if(data == 1){
+                        $("#bookNotAvailable").css("display", "block");
+                        $("#bookAvailable").css("display", "none");
+                        
+                        $("#sectionButtonNotiLoan").css("display", "block");
+                        $("#sectionButtonAddLoan").css("display", "none");
+                    }else{
+                        $("#bookAvailable").css("display", "block");
+                        $("#bookNotAvailable").css("display", "none");
+
+                        $("#sectionButtonAddLoan").css("display", "block");
+                        $("#sectionButtonNotiLoan").css("display", "none");
+                    }
+                },
+                error: function() {
+                    console.log('Error in obtaining data.');
+                }
+            });
+        });
+
+        // Form Add Loan
+        const formAddLoan = document.getElementById("formAddLoan");
+
+        // Event click Add Loan
+        formAddLoan.addEventListener("submit", function(event) {
+            if (
+                !selectBook.value || selectBook.value==0
+            ) {
+                event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
+
+                if (!selectBook.value || selectBook.value==0) {
+                    $("#invalid-bookLoan").css("display", "block");
+                    $("#txtBookLoan").addClass("is-invalid");
+                } else {
+                    $("#invalid-bookLoan").css("display", "none");
+                    $("#txtBookLoan").removeClass("is-invalid");
+                }
+            }
+        });
+
     }else if ((window.location.href).substring(0, 47) === 'http://localhost/libraryexam/public/admin/users') {
         showListUser();
 
