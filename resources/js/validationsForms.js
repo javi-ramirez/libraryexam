@@ -22,7 +22,9 @@ window.onload = function () {
                 name.value.trim() === "" || 
                 published_date.value.trim() === "" || 
                 author.value.trim() === "" ||
-                category.value.trim() === ""
+                category.value.trim() === "" ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value) ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(author.value)
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
@@ -57,11 +59,35 @@ window.onload = function () {
                     $("#invalid-categories").css("display", "none");
                     $("#txtCategory").removeClass("is-invalid");
                 }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
+                    $("#invalid-name").css("display", "block");
+                    $("#txtName").addClass("is-invalid");
+                } else {
+                    $("#invalid-name").css("display", "none");
+                    $("#txtName").removeClass("is-invalid");
+                }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(author.value)) {
+                    $("#invalid-author").css("display", "block");
+                    $("#txtAuthor").addClass("is-invalid");
+                } else {
+                    $("#invalid-author").css("display", "none");
+                    $("#txtAuthor").removeClass("is-invalid");
+                }
             }
         });
 
         name.addEventListener("change", function(event) {
             if (!name.value) {
+                $("#invalid-name").css("display", "block");
+                $("#txtName").addClass("is-invalid");
+            } else {
+                $("#invalid-name").css("display", "none");
+                $("#txtName").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                 $("#invalid-name").css("display", "block");
                 $("#txtName").addClass("is-invalid");
             } else {
@@ -82,6 +108,14 @@ window.onload = function () {
 
         author.addEventListener("change", function(event) {
             if (!author.value) {
+                $("#invalid-author").css("display", "block");
+                $("#txtAuthor").addClass("is-invalid");
+            } else {
+                $("#invalid-author").css("display", "none");
+                $("#txtAuthor").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(author.value)) {
                 $("#invalid-author").css("display", "block");
                 $("#txtAuthor").addClass("is-invalid");
             } else {
@@ -134,7 +168,8 @@ window.onload = function () {
         formAddCategory.addEventListener("submit", function(event) {
             if (
                 name.value.trim() === "" || 
-                description.value.trim() === "" 
+                description.value.trim() === "" ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value) 
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
@@ -153,11 +188,27 @@ window.onload = function () {
                     $("#invalid-descriptionCategory").css("display", "none");
                     $("#txtDescriptionCategory").removeClass("is-invalid");
                 }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
+                    $("#invalid-nameCategory").css("display", "block");
+                    $("#txtNameCategory").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameCategory").css("display", "none");
+                    $("#txtNameCategory").removeClass("is-invalid");
+                }
             }
         });
 
         name.addEventListener("change", function(event) {
             if (!name.value) {
+                $("#invalid-nameCategory").css("display", "block");
+                $("#txtNameCategory").addClass("is-invalid");
+            } else {
+                $("#invalid-nameCategory").css("display", "none");
+                $("#txtNameCategory").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                 $("#invalid-nameCategory").css("display", "block");
                 $("#txtNameCategory").addClass("is-invalid");
             } else {
@@ -299,11 +350,27 @@ window.onload = function () {
                 name.value.trim() === "" || 
                 email.value.trim() === "" || 
                 password.value.trim() === "" || 
-                phone.value.trim() === ""
+                phone.value.trim() === "" ||
+                password.length < 8 ||
+                !/[A-Z]/.test(password.value) ||
+                !/[a-z]/.test(password.value) ||
+                !/\d/.test(password.value) ||
+                !/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password.value) ||
+                !/^\d{10}$/.test(phone.value) ||
+                !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value) ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
                 if (!name.value) {
+                    $("#invalid-nameUser").css("display", "block");
+                    $("#txtNameUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameUser").css("display", "none");
+                    $("#txtNameUser").removeClass("is-invalid");
+                }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                     $("#invalid-nameUser").css("display", "block");
                     $("#txtNameUser").addClass("is-invalid");
                 } else {
@@ -334,11 +401,75 @@ window.onload = function () {
                     $("#invalid-phoneUser").css("display", "none");
                     $("#txtPhoneUser").removeClass("is-invalid");
                 }
+
+                if (password.length < 8) {
+                    $("#invalid-passwordUser").css("display", "block");
+                    $("#txtPasswordUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUser").css("display", "none");
+                    $("#txtPasswordUser").removeClass("is-invalid");
+                }
+
+                if (!/[A-Z]/.test(password.value)) {
+                    $("#invalid-passwordUser").css("display", "block");
+                    $("#txtPasswordUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUser").css("display", "none");
+                    $("#txtPasswordUser").removeClass("is-invalid");
+                }
+
+                if (!/[a-z]/.test(password.value)) {
+                    $("#invalid-passwordUser").css("display", "block");
+                    $("#txtPasswordUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUser").css("display", "none");
+                    $("#txtPasswordUser").removeClass("is-invalid");
+                }
+
+                if (!/\d/.test(password.value)) {
+                    $("#invalid-passwordUser").css("display", "block");
+                    $("#txtPasswordUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUser").css("display", "none");
+                    $("#txtPasswordUser").removeClass("is-invalid");
+                }
+
+                if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password.value)) {
+                    $("#invalid-passwordUser").css("display", "block");
+                    $("#txtPasswordUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUser").css("display", "none");
+                    $("#txtPasswordUser").removeClass("is-invalid");
+                }
+
+                if (!/^\d{10}$/.test(phone.value)) {
+                    $("#invalid-phoneUser").css("display", "block");
+                    $("#txtPhoneUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-phoneUser").css("display", "none");
+                    $("#txtPhoneUser").removeClass("is-invalid");
+                }
+
+                if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value)) {
+                    $("#invalid-emailUser").css("display", "block");
+                    $("#txtEmailUser").addClass("is-invalid");
+                } else {
+                    $("#invalid-emailUser").css("display", "none");
+                    $("#txtEmailUser").removeClass("is-invalid");
+                }
             }
         });
 
         name.addEventListener("change", function(event) {
             if (!name.value) {
+                $("#invalid-nameUser").css("display", "block");
+                $("#txtNameUser").addClass("is-invalid");
+            } else {
+                $("#invalid-nameUser").css("display", "none");
+                $("#txtNameUser").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                 $("#invalid-nameUser").css("display", "block");
                 $("#txtNameUser").addClass("is-invalid");
             } else {
@@ -355,6 +486,14 @@ window.onload = function () {
                 $("#invalid-emailUser").css("display", "none");
                 $("#txtEmailUser").removeClass("is-invalid");
             }
+
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value)) {
+                $("#invalid-emailUser").css("display", "block");
+                $("#txtEmailUser").addClass("is-invalid");
+            } else {
+                $("#invalid-emailUser").css("display", "none");
+                $("#txtEmailUser").removeClass("is-invalid");
+            }
         });
 
         password.addEventListener("change", function(event) {
@@ -365,10 +504,50 @@ window.onload = function () {
                 $("#invalid-passwordUser").css("display", "none");
                 $("#txtPasswordUser").removeClass("is-invalid");
             }
+
+            if (!/[A-Z]/.test(password.value)) {
+                $("#invalid-passwordUser").css("display", "block");
+                $("#txtPasswordUser").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUser").css("display", "none");
+                $("#txtPasswordUser").removeClass("is-invalid");
+            }
+
+            if (!/[a-z]/.test(password.value)) {
+                $("#invalid-passwordUser").css("display", "block");
+                $("#txtPasswordUser").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUser").css("display", "none");
+                $("#txtPasswordUser").removeClass("is-invalid");
+            }
+
+            if (!/\d/.test(password.value)) {
+                $("#invalid-passwordUser").css("display", "block");
+                $("#txtPasswordUser").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUser").css("display", "none");
+                $("#txtPasswordUser").removeClass("is-invalid");
+            }
+
+            if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password.value)) {
+                $("#invalid-passwordUser").css("display", "block");
+                $("#txtPasswordUser").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUser").css("display", "none");
+                $("#txtPasswordUser").removeClass("is-invalid");
+            }
         });
 
         phone.addEventListener("change", function(event) {
             if (!phone.value) {
+                $("#invalid-phoneUser").css("display", "block");
+                $("#txtPhoneUser").addClass("is-invalid");
+            } else {
+                $("#invalid-phoneUser").css("display", "none");
+                $("#txtPhoneUser").removeClass("is-invalid");
+            }
+
+            if (!/^\d{10}$/.test(phone.value)) {
                 $("#invalid-phoneUser").css("display", "block");
                 $("#txtPhoneUser").addClass("is-invalid");
             } else {
@@ -407,7 +586,9 @@ window.onload = function () {
                 name.value.trim() === "" || 
                 published_date.value.trim() === "" || 
                 author.value.trim() === "" ||
-                category.value.trim() === ""
+                category.value.trim() === "" ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value) ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(author.value)
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
@@ -442,11 +623,35 @@ window.onload = function () {
                     $("#invalid-categoriesEdit").css("display", "none");
                     $("#txtCategoryEdit").removeClass("is-invalid");
                 }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
+                    $("#invalid-nameEdit").css("display", "block");
+                    $("#txtNameEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameEdit").css("display", "none");
+                    $("#txtNameEdit").removeClass("is-invalid");
+                }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(author.value)) {
+                    $("#invalid-authorEdit").css("display", "block");
+                    $("#txtAuthorEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-authorEdit").css("display", "none");
+                    $("#txtAuthorEdit").removeClass("is-invalid");
+                }
             }
         });
 
         name.addEventListener("change", function(event) {
             if (!name.value) {
+                $("#invalid-nameEdit").css("display", "block");
+                $("#txtNameEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-nameEdit").css("display", "none");
+                $("#txtNameEdit").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                 $("#invalid-nameEdit").css("display", "block");
                 $("#txtNameEdit").addClass("is-invalid");
             } else {
@@ -462,6 +667,14 @@ window.onload = function () {
             } else {
                 $("#invalid-publishedEdit").css("display", "none");
                 $("#txtPublishedDateEdit").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(author.value)) {
+                $("#invalid-authorEdit").css("display", "block");
+                $("#txtAuthorEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-authorEdit").css("display", "none");
+                $("#txtAuthorEdit").removeClass("is-invalid");
             }
         });
 
@@ -494,7 +707,8 @@ window.onload = function () {
         formEditCategory.addEventListener("submit", function(event) {
             if (
                 name.value.trim() === "" || 
-                description.value.trim() === "" 
+                description.value.trim() === "" ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
@@ -513,11 +727,27 @@ window.onload = function () {
                     $("#invalid-descriptionCategoryEdit").css("display", "none");
                     $("#txtDescriptionCategoryEdit").removeClass("is-invalid");
                 }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
+                    $("#invalid-nameCategoryEdit").css("display", "block");
+                    $("#txtNameCategoryEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameCategoryEdit").css("display", "none");
+                    $("#txtNameCategoryEdit").removeClass("is-invalid");
+                }
             }
         });
 
         name.addEventListener("change", function(event) {
             if (!name.value) {
+                $("#invalid-nameCategoryEdit").css("display", "block");
+                $("#txtNameCategoryEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-nameCategoryEdit").css("display", "none");
+                $("#txtNameCategoryEdit").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                 $("#invalid-nameCategoryEdit").css("display", "block");
                 $("#txtNameCategoryEdit").addClass("is-invalid");
             } else {
@@ -551,11 +781,32 @@ window.onload = function () {
                 email.value.trim() === "" || 
                 currentPass.value.trim() === "" || 
                 newPass.value.trim() === "" || 
-                phone.value.trim() === "" 
+                phone.value.trim() === "" ||
+                currentPass.length < 8 ||
+                !/[A-Z]/.test(currentPass.value) ||
+                !/[a-z]/.test(currentPass.value) ||
+                !/\d/.test(currentPass.value) ||
+                !/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(currentPass.value) ||
+                newPass.length < 8 ||
+                !/[A-Z]/.test(newPass.value) ||
+                !/[a-z]/.test(newPass.value) ||
+                !/\d/.test(newPass.value) ||
+                !/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(newPass.value) ||
+                !/^\d{10}$/.test(phone.value) ||
+                !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value) ||
+                !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)
             ) {
                 event.preventDefault(); //Prevents the form from being submitted if the fields are not complete
 
                 if (!name.value) {
+                    $("#invalid-nameUserEdit").css("display", "block");
+                    $("#txtNameUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-nameUserEdit").css("display", "none");
+                    $("#txtNameUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                     $("#invalid-nameUserEdit").css("display", "block");
                     $("#txtNameUserEdit").addClass("is-invalid");
                 } else {
@@ -594,11 +845,115 @@ window.onload = function () {
                     $("#invalid-phoneUserEdit").css("display", "none");
                     $("#txtPhoneUserEdit").removeClass("is-invalid");
                 }
+
+                if (currentPass.length < 8) {
+                    $("#invalid-passwordUserEdit").css("display", "block");
+                    $("#txtPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUserEdit").css("display", "none");
+                    $("#txtPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/[A-Z]/.test(currentPass.value)) {
+                    $("#invalid-passwordUserEdit").css("display", "block");
+                    $("#txtPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUserEdit").css("display", "none");
+                    $("#txtPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/[a-z]/.test(currentPass.value)) {
+                    $("#invalid-passwordUserEdit").css("display", "block");
+                    $("#txtPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUserEdit").css("display", "none");
+                    $("#txtPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/\d/.test(currentPass.value)) {
+                    $("#invalid-passwordUserEdit").css("display", "block");
+                    $("#txtPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUserEdit").css("display", "none");
+                    $("#txtPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(currentPass.value)) {
+                    $("#invalid-passwordUserEdit").css("display", "block");
+                    $("#txtPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-passwordUserEdit").css("display", "none");
+                    $("#txtPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (newPass.length < 8) {
+                    $("#invalid-newpasswordUserEdit").css("display", "block");
+                    $("#txtNewPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-newpasswordUserEdit").css("display", "none");
+                    $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/[A-Z]/.test(newPass.value)) {
+                    $("#invalid-newpasswordUserEdit").css("display", "block");
+                    $("#txtNewPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-newpasswordUserEdit").css("display", "none");
+                    $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/[a-z]/.test(newPass.value)) {
+                    $("#invalid-newpasswordUserEdit").css("display", "block");
+                    $("#txtNewPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-newpasswordUserEdit").css("display", "none");
+                    $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/\d/.test(newPass.value)) {
+                    $("#invalid-newpasswordUserEdit").css("display", "block");
+                    $("#txtNewPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-newpasswordUserEdit").css("display", "none");
+                    $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(newPass.value)) {
+                    $("#invalid-newpasswordUserEdit").css("display", "block");
+                    $("#txtNewPasswordUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-newpasswordUserEdit").css("display", "none");
+                    $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/^\d{10}$/.test(phone.value)) {
+                    $("#invalid-phoneUserEdit").css("display", "block");
+                    $("#txtPhoneUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-phoneUserEdit").css("display", "none");
+                    $("#txtPhoneUserEdit").removeClass("is-invalid");
+                }
+
+                if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value)) {
+                    $("#invalid-emailUserEdit").css("display", "block");
+                    $("#txtEmailUserEdit").addClass("is-invalid");
+                } else {
+                    $("#invalid-emailUserEdit").css("display", "none");
+                    $("#txtEmailUserEdit").removeClass("is-invalid");
+                }
             }
         });
 
         name.addEventListener("change", function(event) {
             if (!name.value) {
+                $("#invalid-nameUserEdit").css("display", "block");
+                $("#txtNameUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-nameUserEdit").css("display", "none");
+                $("#txtNameUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name.value)) {
                 $("#invalid-nameUserEdit").css("display", "block");
                 $("#txtNameUserEdit").addClass("is-invalid");
             } else {
@@ -615,10 +970,58 @@ window.onload = function () {
                 $("#invalid-emailUserEdit").css("display", "none");
                 $("#txtEmailUserEdit").removeClass("is-invalid");
             }
+
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value)) {
+                $("#invalid-emailUserEdit").css("display", "block");
+                $("#txtEmailUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-emailUserEdit").css("display", "none");
+                $("#txtEmailUserEdit").removeClass("is-invalid");
+            }
         });
 
         currentPass.addEventListener("change", function(event) {
             if (!currentPass.value) {
+                $("#invalid-passwordUserEdit").css("display", "block");
+                $("#txtPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUserEdit").css("display", "none");
+                $("#txtPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (currentPass.length < 8) {
+                $("#invalid-passwordUserEdit").css("display", "block");
+                $("#txtPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUserEdit").css("display", "none");
+                $("#txtPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/[A-Z]/.test(currentPass.value)) {
+                $("#invalid-passwordUserEdit").css("display", "block");
+                $("#txtPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUserEdit").css("display", "none");
+                $("#txtPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/[a-z]/.test(currentPass.value)) {
+                $("#invalid-passwordUserEdit").css("display", "block");
+                $("#txtPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUserEdit").css("display", "none");
+                $("#txtPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/\d/.test(currentPass.value)) {
+                $("#invalid-passwordUserEdit").css("display", "block");
+                $("#txtPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-passwordUserEdit").css("display", "none");
+                $("#txtPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(currentPass.value)) {
                 $("#invalid-passwordUserEdit").css("display", "block");
                 $("#txtPasswordUserEdit").addClass("is-invalid");
             } else {
@@ -635,10 +1038,58 @@ window.onload = function () {
                 $("#invalid-newpasswordUserEdit").css("display", "none");
                 $("#txtNewPasswordUserEdit").removeClass("is-invalid");
             }
+
+            if (newPass.length < 8) {
+                $("#invalid-newpasswordUserEdit").css("display", "block");
+                $("#txtNewPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-newpasswordUserEdit").css("display", "none");
+                $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/[A-Z]/.test(newPass.value)) {
+                $("#invalid-newpasswordUserEdit").css("display", "block");
+                $("#txtNewPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-newpasswordUserEdit").css("display", "none");
+                $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/[a-z]/.test(newPass.value)) {
+                $("#invalid-newpasswordUserEdit").css("display", "block");
+                $("#txtNewPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-newpasswordUserEdit").css("display", "none");
+                $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/\d/.test(newPass.value)) {
+                $("#invalid-newpasswordUserEdit").css("display", "block");
+                $("#txtNewPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-newpasswordUserEdit").css("display", "none");
+                $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(newPass.value)) {
+                $("#invalid-newpasswordUserEdit").css("display", "block");
+                $("#txtNewPasswordUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-newpasswordUserEdit").css("display", "none");
+                $("#txtNewPasswordUserEdit").removeClass("is-invalid");
+            }
         });
 
         phone.addEventListener("change", function(event) {
             if (!phone.value) {
+                $("#invalid-phoneUserEdit").css("display", "block");
+                $("#txtPhoneUserEdit").addClass("is-invalid");
+            } else {
+                $("#invalid-phoneUserEdit").css("display", "none");
+                $("#txtPhoneUserEdit").removeClass("is-invalid");
+            }
+
+            if (!/^\d{10}$/.test(phone.value)) {
                 $("#invalid-phoneUserEdit").css("display", "block");
                 $("#txtPhoneUserEdit").addClass("is-invalid");
             } else {

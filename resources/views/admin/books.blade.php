@@ -94,7 +94,7 @@
                                             <label for="txtName" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtName" id="txtName" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-name">
-                                                Please choose a Name.
+                                                The name is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>

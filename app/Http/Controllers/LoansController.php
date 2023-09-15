@@ -100,7 +100,6 @@ class LoansController extends Controller
                 ->get();
 
                 $idJson = json_decode(json_encode($consultingSession),true);
-                $phone = "+52".implode($idJson[0]);
 
                 $consultingIdBook = DB::table('loans')
                 ->select('book_id')
@@ -138,12 +137,23 @@ class LoansController extends Controller
                         $token = env('TWILIO_AUTH_TOKEN');
                         $twilio = new Client($sid, $token);
 
+                        $msj = "Dear ".$notification->userName." with email: ".$notification->email.", we are pleased to notify you that the book ".$notification->booksName." is once again available for loan.";
                         // Send menssage SMS
-                        $message = $twilio->messages
-                        ->create($phone, [
+                        /*$message = $twilio->messages
+                        ->create("+52".$notification->phone, [
                             "from" => env('TWILIO_PHONE_NUMBER'), 
-                            "body" => "Dear ".$notification->userName." with email: ".$notification->email.", we are pleased to notify you that the book ".$notification->booksName." is once again available for loan."
-                        ]);
+                            "body" => $msj
+                        ]);*/
+
+                        //Send WhatsApp
+                        $message = $twilio->messages->create(
+                            "whatsapp:+521".$notification->phone,
+                            [
+                                "from" => "whatsapp:".env('TWILIO_WHATS_NUMBER'),
+                                "body" => $msj
+                            ]
+                        );
+
 
                         $Notifications = NotificationsUsers::find($notification->notiId);
                         $Notifications->status = 0;

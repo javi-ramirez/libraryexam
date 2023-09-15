@@ -42,7 +42,7 @@
                                             <label for="txtNameEdit" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtNameEdit" id="txtNameEdit" maxlength="255" value="{{$dataBook[0]->name}}">
                                             <div class="invalid-feedback" id="invalid-nameEdit">
-                                                Please choose a Name.
+                                                The name is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>

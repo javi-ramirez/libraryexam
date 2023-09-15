@@ -43,7 +43,7 @@
                                             <label for="txtNameCategoryEdit" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtNameCategoryEdit" id="txtNameCategoryEdit" maxlength="255" value="{{$dataCategories[0]->name}}">
                                             <div class="invalid-feedback" id="invalid-nameCategoryEdit">
-                                                Please choose a Name.
+                                                The name is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                             <label for="txtDescriptionCategoryEdit" class="bmd-label-floating">Description</label>
                                             <input type="text" class="form-control" name="txtDescriptionCategoryEdit" id="txtDescriptionCategoryEdit" maxlength="255" value="{{$dataCategories[0]->description}}">
                                             <div class="invalid-feedback" id="invalid-descriptionCategoryEdit">
-                                                Please choose a Description.
+                                                Please enter a Description.
                                             </div>
                                         </div>
                                     </div>

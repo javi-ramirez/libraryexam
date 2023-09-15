@@ -86,7 +86,7 @@
                                             <label for="txtNameCategory" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtNameCategory" id="txtNameCategory" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-nameCategory">
-                                                Please choose a Name.
+                                                The name is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                             <label for="txtDescriptionCategory" class="bmd-label-floating">Description</label>
                                             <input type="text" class="form-control" name="txtDescriptionCategory" id="txtDescriptionCategory" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-descriptionCategory">
-                                                Please choose a Description.
+                                                Please enter a Description.
                                             </div>
                                         </div>
                                     </div>

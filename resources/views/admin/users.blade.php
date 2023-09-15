@@ -76,7 +76,7 @@
                                             <label for="txtNameUser" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtNameUser" id="txtNameUser" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-nameUser">
-                                                Please choose a Name.
+                                                The name is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                             <label for="txtEmailUser" class="bmd-label-floating">Email</label>
                                             <input type="text" class="form-control" name="txtEmailUser" id="txtEmailUser" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-emailUser">
-                                                Please choose a Email.
+                                                The e-mail is not valid. Please enter a valid format. Example: info@dominio.com
                                             </div>
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@
                                             <label for="txtPhoneUser" class="bmd-label-floating">Phone</label>
                                             <input type="text" class="form-control" name="txtPhoneUser" id="txtPhoneUser" maxlength="10">
                                             <div class="invalid-feedback" id="invalid-phoneUser">
-                                                Please choose a Phone.
+                                                The telephone number must be exactly 10 digits long and contain only numbers.
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                                             <label for="txtPasswordUser" class="bmd-label-floating">Password</label>
                                             <input type="password" class="form-control" name="txtPasswordUser" id="txtPasswordUser" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-passwordUser">
-                                                Please choose a Password.
+                                                Verify that the password has at least 8 characters, at least one uppercase letter, at least one lowercase letter, at least one digit, at least one special character, at least one uppercase letter, at least one lowercase letter, at least one digit, at least one special character.
                                             </div>
                                         </div>
                                     </div>

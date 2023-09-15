@@ -43,7 +43,7 @@
                                             <label for="txtNameUserEdit" class="bmd-label-floating">Name</label>
                                             <input type="text" class="form-control" name="txtNameUserEdit" id="txtNameUserEdit" maxlength="255" value="{{$dataUser[0]->name}}">
                                             <div class="invalid-feedback" id="invalid-nameUserEdit">
-                                                Please choose a Name.
+                                                The name is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@
                                             <label for="txtEmailUserEdit" class="bmd-label-floating">Email</label>
                                             <input type="text" class="form-control" name="txtEmailUserEdit" id="txtEmailUserEdit" maxlength="255" value="{{$dataUser[0]->email}}">
                                             <div class="invalid-feedback" id="invalid-emailUserEdit">
-                                                Please choose a Email.
+                                                The e-mail is not valid. Please enter a valid format. Example: info@dominio.com
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +61,7 @@
                                             <label for="txtPhoneUserEdit" class="bmd-label-floating">Phone</label>
                                             <input type="text" class="form-control" name="txtPhoneUserEdit" id="txtPhoneUserEdit" maxlength="10" value="{{$dataUser[0]->phone}}">
                                             <div class="invalid-feedback" id="invalid-phoneUserEdit">
-                                                Please choose a Phone.
+                                                The telephone number must be exactly 10 digits long and contain only numbers.
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                             <label for="txtPasswordUserEdit" class="bmd-label-floating">Current password</label>
                                             <input type="password" class="form-control" name="txtPasswordUserEdit" id="txtPasswordUserEdit" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-passwordUserEdit">
-                                                Please choose a Current password.
+                                                Verify that the password has at least 8 characters, at least one uppercase letter, at least one lowercase letter, at least one digit, at least one special character, at least one uppercase letter, at least one lowercase letter, at least one digit, at least one special character.
                                             </div>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                             <label for="txtNewPasswordUserEdit" class="bmd-label-floating">New password</label>
                                             <input type="password" class="form-control" name="txtNewPasswordUserEdit" id="txtNewPasswordUserEdit" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-newpasswordUserEdit">
-                                                Please choose a New password.
+                                                Verify that the password has at least 8 characters, at least one uppercase letter, at least one lowercase letter, at least one digit, at least one special character, at least one uppercase letter, at least one lowercase letter, at least one digit, at least one special character.
                                             </div>
                                         </div>
                                     </div>

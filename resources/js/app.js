@@ -105,3 +105,40 @@ function cleanFormAddLoan(){
     $("#bookAvailable").css("display", "none");
                         
 }
+
+function validarContrasena() {
+    var contrasena = document.getElementById("contrasena").value;
+    var mensaje = document.getElementById("mensaje");
+    
+    // Verificar que la contraseña tenga al menos 8 caracteres
+    if (contrasena.length < 8) {
+        mensaje.textContent = "La contraseña debe tener al menos 8 caracteres.";
+        return;
+    }
+
+    // Verificar que la contraseña contenga al menos una letra mayúscula
+    if (!/[A-Z]/.test(contrasena)) {
+        mensaje.textContent = "La contraseña debe contener al menos una letra mayúscula.";
+        return;
+    }
+
+    // Verificar que la contraseña contenga al menos una letra minúscula
+    if (!/[a-z]/.test(contrasena)) {
+        mensaje.textContent = "La contraseña debe contener al menos una letra minúscula.";
+        return;
+    }
+
+    // Verificar que la contraseña contenga al menos un dígito
+    if (!/\d/.test(contrasena)) {
+        mensaje.textContent = "La contraseña debe contener al menos un dígito.";
+        return;
+    }
+
+    // Verificar que la contraseña contenga al menos un carácter especial
+    if (!/[@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(contrasena)) {
+        mensaje.textContent = "La contraseña debe contener al menos un carácter especial.";
+        return;
+    }
+
+    mensaje.textContent = "La contraseña es válida.";
+}
