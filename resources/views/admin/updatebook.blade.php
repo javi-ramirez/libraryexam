@@ -60,7 +60,7 @@
                                             <label for="txtAuthorEdit" class="bmd-label-floating">Author</label>
                                             <input type="text" class="form-control" name="txtAuthorEdit" id="txtAuthorEdit" maxlength="255" value="{{$dataBook[0]->author}}">
                                             <div class="invalid-feedback" id="invalid-authorEdit">
-                                                Please choose a Author.
+                                                The author is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>

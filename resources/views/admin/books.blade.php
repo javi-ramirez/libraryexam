@@ -112,7 +112,7 @@
                                             <label for="txtAuthor" class="bmd-label-floating">Author</label>
                                             <input type="text" class="form-control" name="txtAuthor" id="txtAuthor" maxlength="255">
                                             <div class="invalid-feedback" id="invalid-author">
-                                                Please choose a Author.
+                                                The author is not valid. It must not contain numbers or special characters.
                                             </div>
                                         </div>
                                     </div>
