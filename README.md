@@ -7,7 +7,7 @@ Manual de Instalación para la Aplicación Laravel "libraryexam"
 Este manual te guiará a través del proceso de configuración y ejecución de la aplicación Laravel "libraryexam" en tu entorno local.
 Requisitos Previos
 Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
-1.	PHP: Debe estar instalado en tu sistema. Puedes verificar si está instalado ejecutando php -v en la terminal.
+1.	PHP 8.1: Debe estar instalado en tu sistema. Puedes verificar si está instalado ejecutando php -v en la terminal.
 
 2.	Composer: Necesitas Composer para administrar las dependencias de Laravel. Puedes descargarlo desde https://getcomposer.org/.
 
